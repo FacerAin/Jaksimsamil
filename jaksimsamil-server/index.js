@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const app = express();
+const api = require("./src/api");
 require("dotenv").config();
 const { SERVER_PORT, MONGO_URL } = process.env;
 app.use(
@@ -9,8 +10,7 @@ app.use(
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use("/api", require("./api"));
-
+app.use("/api", api);
 mongoose
   .connect(MONGO_URL, { useNewUrlParser: true, useFindAndModify: false })
   .then(() => {
