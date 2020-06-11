@@ -14,7 +14,7 @@ exports.getBJ = function (userid) {
     let psList = [];
     const $ = cheerio.load(html.data);
     const $bodyList = $("div.panel-body").children();
-
+    
     $bodyList.each(function (i) {
       if (i % 2 == 0) {
         psList[i / 2] = {
