@@ -1,6 +1,6 @@
-const express = require("express");
-const router = express.Router();
+const Router = require("koa-router");
+const notify = new Router();
 
-router.post("/slack");
+notify.post("/slack");
 
-module.exports = router;
+module.exports = notify;

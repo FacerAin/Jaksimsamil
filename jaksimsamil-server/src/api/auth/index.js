@@ -1,11 +1,8 @@
-const express = require("express");
-const router = express.Router();
+const Router = require("koa-router");
+const auth = new Router();
+const authCtrl = require("./auth.ctrl");
+auth.post("/login", authCtrl.login);
+auth.get("/logout", authCtrl.logout);
+auth.post("/register", authCtrl.register);
 
-router.post("/login");
-router.get("/logout");
-router.post("/register");
-
-
-
-
-module.exports = router;
+module.exports = auth;

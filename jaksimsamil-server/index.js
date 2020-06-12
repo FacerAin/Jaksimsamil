@@ -1,21 +1,25 @@
-const express = require("express");
-const morgan = require("morgan");
+const Koa = require("koa");
+const Router = require("koa-router");
+const bodyParser = require("koa-bodyparser");
 const mongoose = require("mongoose");
-const app = express();
-const bodyParser = require("body-parser");
-const api = require("./src/api");
 const jwtMiddleware = require("./src/lib/jwtMiddleware");
+const app = new Koa();
+const router = new Router();
 require("dotenv").config();
-const { SERVER_PORT, MONGO_URL } = process.env;
-app.use(morgan("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser());
 app.use(jwtMiddleware);
+const api = require("./src/api");
+const { SERVER_PORT, MONGO_URL } = process.env;
 
-app.use("/api", api);
+router.use("/api", api.routes());
+app.use(router.routes()).use(router.allowedMethods());
+
 mongoose
-  .connect(MONGO_URL, { useNewUrlParser: true, useFindAndModify: false })
+  .connect(MONGO_URL, {
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useUnifiedTopology: true,
+  })
   .then(() => {
     console.log("Connected to MongoDB");
   })

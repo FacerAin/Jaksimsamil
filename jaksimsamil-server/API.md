@@ -27,6 +27,7 @@
 | friend  | 유저 친구 등록           | POST   | api/friend                 | 바로가기 | JWT Token |
 | friend  | 유저의 친구 조회         | GET    | api/friend:id              | 바로가기 | None      |
 | profile | 유저가 푼 문제 조회      | GET    | api/profile/solved:id      | 바로가기 | None      |
+| profile | 유저가 푼 문제 동기화    | Update | api/profile/solved:id      | 바로가기 | None      |
 | profile | 유저가 푼 문제 개수 조회 | GET    | api/profile/solvednum:id   | 바로가기 | None      |
 | profile | 추천 문제 조회           | GET    | api/profile/recommendps:id | 바로가기 | None      |
 | notify  | 슬랙 메시지 전송 요청    | POST   | api/notify/slack           | 바로가기 | Jwt Token |
