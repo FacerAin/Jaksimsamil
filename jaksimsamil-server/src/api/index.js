@@ -1,5 +1,5 @@
-const express = require("express");
-const app = express();
+const Router = require("koa-router");
+const api = new Router();
 
 const auth = require("./auth");
 const friend = require("./friend");
@@ -7,10 +7,10 @@ const notify = require("./profile");
 const user = require("./user");
 const profile = require("./profile");
 
-app.use("/auth", auth);
-app.use("/friend", friend);
-app.use("/notify", notify);
-app.use("/user", user);
-app.use("/profile", profile);
+api.use("/auth", auth.routes());
+api.use("/friend", friend.routes());
+api.use("/notify", notify.routes());
+api.use("/user", user.routes());
+api.use("/profile", profile.routes());
 
-module.exports = app;
+module.exports = api;

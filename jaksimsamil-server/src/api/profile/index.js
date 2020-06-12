@@ -1,8 +1,8 @@
-const express = require("express");
-const router = express.Router();
+const Router = require("koa-router");
+const profile = new Router();
 
-router.post("/solved:id");
-router.get("/solvednum:id");
-router.get("recommendps:id");
+profile.post("/solved:id");
+profile.get("/solvednum:id");
+profile.get("recommendps:id");
 
-module.exports = router;
+module.exports = profile;

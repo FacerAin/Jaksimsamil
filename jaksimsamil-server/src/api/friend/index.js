@@ -1,9 +1,9 @@
-const express = require("express");
-const router = express.Router();
+const Router = require("koa-router");
+const friend = new Router();
 
-router.post("/");
-router.delete("/:id");
-router.get("/:id");
-router.get("");
+friend.post("/");
+friend.delete("/:id");
+friend.get("/:id");
+friend.get("");
 
-module.exports = router;
+module.exports = friend;

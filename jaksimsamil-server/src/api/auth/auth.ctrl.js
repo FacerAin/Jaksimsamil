@@ -12,6 +12,7 @@ exports.register = async (ctx) => {
     username: Joi.string().alphanum().min(3).max(20).required(),
     password: Joi.string().required(),
   });
+
   const result = Joi.validate(ctx.request.body, schema);
   if (result.error) {
     ctx.status = 400;
@@ -33,7 +34,7 @@ exports.register = async (ctx) => {
     await user.save();
     ctx.body = user.serialize();
 
-    const token = user.generateToekn();
+    const token = user.generateToken();
     ctx.cookies.set("acces_token", token, {
       //3일동안 유효
       maxAge: 1000 * 60 * 60 * 24 * 3,
