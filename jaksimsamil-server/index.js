@@ -3,12 +3,16 @@ const Router = require("koa-router");
 const bodyParser = require("koa-bodyparser");
 const mongoose = require("mongoose");
 const jwtMiddleware = require("./src/lib/jwtMiddleware");
+const api = require("./src/api");
+
+require("dotenv").config();
+
 const app = new Koa();
 const router = new Router();
-require("dotenv").config();
+
 app.use(bodyParser());
 app.use(jwtMiddleware);
-const api = require("./src/api");
+
 const { SERVER_PORT, MONGO_URL } = process.env;
 
 router.use("/api", api.routes());
@@ -26,6 +30,7 @@ mongoose
   .catch((e) => {
     console.log(e);
   });
+
 app.listen(SERVER_PORT, () => {
   console.log("Server is running on port", process.env.SERVER_PORT);
 });
