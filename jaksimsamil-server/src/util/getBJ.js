@@ -3,7 +3,6 @@ const cheerio = require("cheerio");
 const StringToDate = require("./StringToDate");
 /*
 ToDO
-- 유저 네임 검증
 - 예외 처리
 */
 exports.getBJ = async function (userid) {
