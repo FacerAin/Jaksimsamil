@@ -3,5 +3,8 @@
 # dotenv
 .env
 
+#access_log
+access_log
+
 # dependencies
 /node_modules
