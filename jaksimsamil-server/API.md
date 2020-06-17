@@ -32,6 +32,6 @@
 | profile | 추천 문제 조회              | GET    | api/profile/recommend:id | 바로가기 | None      |
 | notify  | 슬랙 메시지 전송 요청       | POST   | api/notify/slack         | 바로가기 | Jwt Token |
 | auth    | 로그인                      | POST   | api/auth/login           | 바로가기 | None      |
-| auth    | 로그아웃                    | GET    | api/auth/logout          | 바로가기 | JWT Token |
+| auth    | 로그아웃                    | POST   | api/auth/logout          | 바로가기 | JWT Token |
 | auth    | 회원가입                    | POST   | api/auth/register        | 바로가기 | None      |
 | auth    | 로그인 확인                 | GET    | api/auth/check           | 바로가기 | None      |
