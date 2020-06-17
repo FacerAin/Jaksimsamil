@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { changeField, initializeForm, login } from '../../modules/auth';
-import AuthForm from './AuthForm';
+import AuthForm from '../../components/auth/AuthForm';
+import { check } from '../../modules/user';
 
 const LoginForm = ({ history }) => {
   const dispatch = useDispatch();
@@ -59,8 +60,15 @@ const LoginForm = ({ history }) => {
       console.log(user);
     }
   }, [history, user]);
-
-  return <AuthForm type="login"></AuthForm>;
+  return (
+    <AuthForm
+      type="login"
+      form={form}
+      onChange={onChange}
+      onSubmit={onSubmit}
+      error={error}
+    ></AuthForm>
+  );
 };
 
 export default withRouter(LoginForm);

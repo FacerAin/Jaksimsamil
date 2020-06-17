@@ -1,11 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import Button from '../common/Button';
 import palette from '../../lib/styles/palette';
-/*
-Display Auth Form(Register, Login)
-*/
+import Button from '../common/Button';
 
 const AuthFormBlock = styled.div`
   h3 {
@@ -47,9 +44,6 @@ const ButtonWithMarginTop = styled(Button)`
   margin-top: 1rem;
 `;
 
-/**
- * Show Error message
- */
 const ErrorMessage = styled.div`
   color: red;
   text-align: center;

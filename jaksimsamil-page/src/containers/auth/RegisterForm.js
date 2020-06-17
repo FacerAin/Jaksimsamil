@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { changeField, initializeForm, register } from '../../modules/auth';
 import AuthForm from '../../components/auth/AuthForm';
+import { check } from '../../modules/user';
 import { withRouter } from 'react-router-dom';
 
 const RegisterForm = ({ history }) => {
@@ -32,7 +34,6 @@ const RegisterForm = ({ history }) => {
       return;
     }
     if (password !== passwordConfirm) {
-      //Todo Handle Error
       setError('비밀번호가 일치하지 않습니다.');
       changeField({ form: 'register', key: 'password', value: '' });
       changeField({ form: 'register', key: 'passwordConfirm', value: '' });
@@ -72,8 +73,15 @@ const RegisterForm = ({ history }) => {
       }
     }
   }, [history, user]);
-
-  return <AuthForm type="register" form={form}></AuthForm>;
+  return (
+    <AuthForm
+      type="register"
+      form={form}
+      onChange={onChange}
+      onSubmit={onSubmit}
+      error={error}
+    ></AuthForm>
+  );
 };
 
 export default withRouter(RegisterForm);
