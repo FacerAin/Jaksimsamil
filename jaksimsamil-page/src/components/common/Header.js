@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Responsive from './Responsive';
 import Button from './Button';
 import { Link } from 'react-router-dom';
+import Categories from './Categories';
 
 const HeaderBlock = styled.div`
   position: fixed;
@@ -35,7 +36,7 @@ const UserInfo = styled.div`
   margin-right: 1rem;
 `;
 
-const Header = ({ user, onLogout }) => {
+const Header = ({ user, onLogout, category, onSelect }) => {
   return (
     <>
       <HeaderBlock>
@@ -43,6 +44,11 @@ const Header = ({ user, onLogout }) => {
           <Link to="/" className="logo">
             작심삼일
           </Link>
+          <Categories
+            category={category}
+            onSelect={onSelect}
+            className="right"
+          />
           {user ? (
             <div className="right">
               <UserInfo>{user.username}</UserInfo>

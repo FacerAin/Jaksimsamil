@@ -2,13 +2,13 @@ import React from 'react';
 import HeaderContainer from '../containers/common/HeaderContainer';
 import Button from '../components/common/Button';
 
-const HomePage = () => {
+const SettingPage = () => {
   return (
     <div>
       <HeaderContainer />
-      <Button>home</Button>
+      <Button>setting</Button>
     </div>
   );
 };
 
-export default HomePage;
+export default SettingPage;
