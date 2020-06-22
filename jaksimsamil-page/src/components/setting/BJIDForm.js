@@ -1,10 +1,11 @@
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
-import Button from '../common/Button';
 import palette from '../../lib/styles/palette';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 const BJIDFormBlock = styled.div`
   width: 100%;
-  border-top: 1px solid ${palette.gray[2]};
   padding-top: 2rem;
   h4 {
     color: ${palette.gray[8]};
@@ -13,21 +14,35 @@ const BJIDFormBlock = styled.div`
   }
 `;
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+}));
+
 const BJIDForm = ({ onChange, onBJIDSubmit, profile, onSyncBJIDSubmit }) => {
+  const classes = useStyles();
   return (
-    <BJIDFormBlock>
-      <h4>백준 아이디</h4>
+    <div>
       <form onSubmit={onBJIDSubmit}>
-        <input
+        <TextField
           name="userBJID"
           onChange={onChange}
           value={profile.userBJID}
           placeholder="백준 아이디"
+          id="standard-basic"
+          label="백준 아이디"
         />
-        <button type="submit">등록</button>
+        <Button variant="outlined" type="submit">
+          등록
+        </Button>
       </form>
-      <button onClick={onSyncBJIDSubmit}>동기화</button>
-    </BJIDFormBlock>
+      <Button variant="outlined" onClick={onSyncBJIDSubmit}>
+        동기화
+      </Button>
+    </div>
   );
 };
 export default BJIDForm;

@@ -9,7 +9,7 @@ import {
   initializeProfile,
 } from '../../modules/profile';
 import SettingForm from '../../components/setting/SettingForm';
-import { sync } from '../../../node_modules/fast-glob/index';
+
 const SettingContainer = ({ history }) => {
   const dispatch = useDispatch();
   const { user, profile } = useSelector(({ user, profile }) => ({
@@ -42,12 +42,17 @@ const SettingContainer = ({ history }) => {
   };
 
   useEffect(() => {
-    let username = user.username;
-    dispatch(getPROFILE({ username }));
-    return () => {
-      dispatch(initializeProfile());
-    };
-  }, [dispatch, user]);
+    if (!user) {
+      alert('로그인이 필요합니다  ');
+      history.push('/');
+    } else {
+      let username = user.username;
+      dispatch(getPROFILE({ username }));
+      return () => {
+        dispatch(initializeProfile());
+      };
+    }
+  }, [dispatch, user, history]);
 
   return (
     <SettingForm
