@@ -13,19 +13,20 @@ const BJIDFormBlock = styled.div`
   }
 `;
 
-const BJIDForm = ({ onChange, onBJIDSubmit, profile }) => {
+const BJIDForm = ({ onChange, onBJIDSubmit, profile, onSyncBJIDSubmit }) => {
   return (
     <BJIDFormBlock>
       <h4>백준 아이디</h4>
-      <input
-        name="userBJID"
-        onChange={onChange}
-        value={profile.userBJID}
-        placeholder="백준 아이디"
-      />
-      <button type="submit" onSubmit={onBJIDSubmit}>
-        등록
-      </button>
+      <form onSubmit={onBJIDSubmit}>
+        <input
+          name="userBJID"
+          onChange={onChange}
+          value={profile.userBJID}
+          placeholder="백준 아이디"
+        />
+        <button type="submit">등록</button>
+      </form>
+      <button onClick={onSyncBJIDSubmit}>동기화</button>
     </BJIDFormBlock>
   );
 };

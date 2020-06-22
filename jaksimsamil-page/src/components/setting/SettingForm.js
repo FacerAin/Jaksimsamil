@@ -33,8 +33,7 @@ const SectionContainer = styled.div`
   display: flex;
 `;
 
-const SettingForm = ({ onChange, onBJIDSubmit, profile }) => {
-  console.log(profile);
+const SettingForm = ({ onChange, onBJIDSubmit, profile, onSyncBJIDSubmit }) => {
   return (
     <SettingFormBlock>
       <SectionContainer>
@@ -47,6 +46,7 @@ const SettingForm = ({ onChange, onBJIDSubmit, profile }) => {
           profile={profile}
           onChange={onChange}
           onBJIDSubmit={onBJIDSubmit}
+          onSyncBJIDSubmit={onSyncBJIDSubmit}
         />
       </SectionContainer>
 

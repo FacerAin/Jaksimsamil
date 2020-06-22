@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { changeField, setBJID } from '../../modules/profile';
+import {
+  changeField,
+  setBJID,
+  getPROFILE,
+  syncBJID,
+} from '../../modules/profile';
 import SettingForm from '../../components/setting/SettingForm';
+import { sync } from '../../../node_modules/fast-glob/index';
 const SettingContainer = ({ history }) => {
   const dispatch = useDispatch();
   const [error, setError] = useState(null);
@@ -21,16 +27,25 @@ const SettingContainer = ({ history }) => {
     );
   };
 
+  const onSyncBJIDSubmit = (e) => {
+    e.preventDefault();
+    let username = profile.username;
+    dispatch(syncBJID({ username }));
+  };
+
   const onBJIDSubmit = (e) => {
     e.preventDefault();
     let username = profile.username;
     let userBJID = profile.userBJID;
+
     dispatch(setBJID({ username, userBJID }));
   };
 
   useEffect(() => {
+    console.log('1');
+    let username = JSON.parse(user).username;
+    dispatch(getPROFILE({ username }));
     //Do Init Form
-    console.log(profile);
   }, [dispatch]);
 
   return (
@@ -38,6 +53,7 @@ const SettingContainer = ({ history }) => {
       type="setting"
       onChange={onChange}
       onBJIDSubmit={onBJIDSubmit}
+      onSyncBJIDSubmit={onSyncBJIDSubmit}
       profile={profile}
     ></SettingForm>
   );

@@ -8,14 +8,27 @@ import { takeLatest } from 'redux-saga/effects';
 
 const INITIALIZE = 'profile/INITIALIZE';
 const CHANGE_FIELD = 'profile/CHANGE_FIELD';
-
 const [SET_BJID, SET_BJID_SUCCESS, SET_BJID_FAILURE] = createRequestActionTypes(
   'profile/SET_BJID',
 );
+const [
+  GET_PROFILE,
+  GET_PROFILE_SUCCESS,
+  GET_PROFILE_FAILURE,
+] = createRequestActionTypes('profile/GET_PROFILE');
 
-export const setBJID = createAction(SET_BJID, ({ username, BJID }) => ({
+const [
+  SYNC_BJID,
+  SYNC_BJID_SUCCESS,
+  SYNC_BJID_FAILURE,
+] = createRequestActionTypes('profile/SYNC_BJID');
+
+export const syncBJID = createAction(SYNC_BJID, ({ username }) => ({
   username,
-  BJID,
+}));
+export const setBJID = createAction(SET_BJID, ({ username, userBJID }) => ({
+  username,
+  userBJID,
 }));
 
 export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
@@ -23,17 +36,23 @@ export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
   value,
 }));
 
+export const getPROFILE = createAction(GET_PROFILE, ({ username }) => ({
+  username,
+}));
 const initialState = {
   username: '',
   userBJID: '',
   solvedBJ: '',
   friendList: [],
-  BJIDError: '',
+  profileError: '',
 };
-
+const getPROFILESaga = createRequestSaga(GET_PROFILE, profileAPI.getPROFILE);
 const setBJIDSaga = createRequestSaga(SET_BJID, profileAPI.setBJID);
+const syncBJIDSaga = createRequestSaga(SYNC_BJID, profileAPI.syncBJ);
 export function* profileSaga() {
   yield takeLatest(SET_BJID, setBJIDSaga);
+  yield takeLatest(GET_PROFILE, getPROFILESaga);
+  yield takeLatest(SYNC_BJID, syncBJIDSaga);
 }
 
 export default handleActions(
@@ -43,15 +62,39 @@ export default handleActions(
       produce(state, (draft) => {
         draft[key] = value;
       }),
-
-    [SET_BJID_SUCCESS]: (state, { payload: BJID }) => ({
+    [GET_PROFILE_SUCCESS]: (
+      state,
+      { payload: { username, userBJID, solvedBJ, friendList } },
+    ) => ({
       ...state,
-      BJID,
-      BJIDError: null,
+      username: username,
+      userBJID: userBJID,
+      solvedBJ: solvedBJ,
+      friendList: friendList,
+      profileError: null,
+    }),
+    [GET_PROFILE_FAILURE]: (state, { payload: error }) => ({
+      ...state,
+      profileError: error,
+    }),
+
+    [SET_BJID_SUCCESS]: (state, { payload: { userBJID } }) => ({
+      ...state,
+      userBJID: userBJID,
+      profileError: null,
     }),
     [SET_BJID_FAILURE]: (state, { payload: error }) => ({
       ...state,
-      BJIDError: error,
+      profileError: error,
+    }),
+    [SYNC_BJID_SUCCESS]: (state, { payload: { solvedBJ } }) => ({
+      ...state,
+      solvedBJ,
+      profileError: null,
+    }),
+    [SYNC_BJID_FAILURE]: (state, { payload: error }) => ({
+      ...state,
+      profileError: error,
     }),
   },
   initialState,
