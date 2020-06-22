@@ -6,7 +6,7 @@ const HomePage = () => {
   return (
     <div>
       <HeaderContainer />
-      <Button>test</Button>
+      <Button>home</Button>
     </div>
   );
 };

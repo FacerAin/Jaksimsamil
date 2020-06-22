@@ -7,4 +7,5 @@ profile.get("/solvednum:id");
 profile.get("/recommendps:id");
 profile.patch("/syncBJ", profileCtrl.syncBJ);
 profile.post("/setprofile", profileCtrl.setProfile);
+profile.post("/getprofile", profileCtrl.getProfile);
 module.exports = profile;

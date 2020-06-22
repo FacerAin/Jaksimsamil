@@ -13,6 +13,24 @@ exports.checkObjectId = (ctx, next) => {
   }
   return next();
 };
+/*POST /api/profile/getprofile
+{
+  username: "username"
+}
+*/
+exports.getProfile = async (ctx) => {
+  try {
+    const { username } = ctx.request.body;
+    const profile = await Profile.findByUsername(username);
+    if (!profile) {
+      ctx.status = 401;
+      return;
+    }
+    ctx.body = profile;
+  } catch (e) {
+    ctx.throw(500, e);
+  }
+};
 /*
 POST /api/proflie/setprofile
 {

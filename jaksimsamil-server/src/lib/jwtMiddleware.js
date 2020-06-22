@@ -3,14 +3,11 @@ const User = require("../models/user");
 
 const jwtMiddleware = async (ctx, next) => {
   const token = ctx.cookies.get("access_token");
-  console.log("1");
-  console.log(token);
+
   if (!token) {
-    console.log("1");
     return next();
   }
   try {
-    console.log("1");
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     ctx.state.user = {
       _id: decoded._id,
@@ -25,7 +22,7 @@ const jwtMiddleware = async (ctx, next) => {
         httpOnly: true,
       });
     }
-    console.log(decoded);
+
     return next();
   } catch (e) {
     return next();

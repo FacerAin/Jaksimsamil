@@ -88,7 +88,6 @@ exports.login = async (ctx) => {
 GET api/auth/check
 */
 exports.check = async (ctx) => {
-  console.log(ctx.state);
   const { user } = ctx.state;
   if (!user) {
     ctx.status = 401;
