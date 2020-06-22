@@ -22,7 +22,7 @@ const [
   SYNC_BJID_SUCCESS,
   SYNC_BJID_FAILURE,
 ] = createRequestActionTypes('profile/SYNC_BJID');
-
+export const initializeProfile = createAction(INITIALIZE);
 export const syncBJID = createAction(SYNC_BJID, ({ username }) => ({
   username,
 }));
