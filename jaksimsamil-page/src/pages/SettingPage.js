@@ -1,12 +1,13 @@
 import React from 'react';
 import HeaderContainer from '../containers/common/HeaderContainer';
-import Button from '../components/common/Button';
+import SettingForm from '../components/setting/SettingForm';
+import SettingContainer from '../containers/setting/SettingContainer';
 
 const SettingPage = () => {
   return (
     <div>
       <HeaderContainer />
-      <Button>setting</Button>
+      <SettingContainer></SettingContainer>
     </div>
   );
 };

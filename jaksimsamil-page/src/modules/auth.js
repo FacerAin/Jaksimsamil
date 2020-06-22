@@ -5,19 +5,19 @@ import createRequestSaga, {
   createRequestActionTypes,
 } from '../lib/createRequestSaga';
 import * as authAPI from '../lib/api/auth';
-const CHAGE_FIELD = 'auth/CHANGE_FIELD';
+const CHANGE_FIELD = 'auth/CHANGE_FIELD';
 const INITIALIZE_FORM = 'auth/INITIALIZE_FORM';
 
-const REGISTER = 'auth/REGISTER';
-const REGISTER_SUCCESS = 'auth/REGISTER_SUCCESS';
-const REGISTER_FAILURE = 'auth/REGISTER_FAILURE';
+const [REGISTER, REGISTER_SUCCESS, REGISTER_FAILURE] = createRequestActionTypes(
+  'auth/REGISTER',
+);
 
-const LOGIN = 'auth/LOGIN';
-const LOGIN_SUCCESS = 'auth/LOGIN_SUCCESS';
-const LOGIN_FAILURE = 'auth/LOGIN_FAILURE';
+const [LOGIN, LOGIN_SUCCESS, LOGIN_FAILURE] = createRequestActionTypes(
+  'auth/REGISTER',
+);
 
 export const changeField = createAction(
-  CHAGE_FIELD,
+  CHANGE_FIELD,
   ({ form, key, value }) => ({
     form,
     key,
@@ -59,7 +59,7 @@ export function* authSaga() {
 
 const auth = handleActions(
   {
-    [CHAGE_FIELD]: (state, { payload: { form, key, value } }) =>
+    [CHANGE_FIELD]: (state, { payload: { form, key, value } }) =>
       produce(state, (draft) => {
         draft[form][key] = value;
       }),
