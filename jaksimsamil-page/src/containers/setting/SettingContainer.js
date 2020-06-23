@@ -6,12 +6,12 @@ import {
   setBJID,
   getPROFILE,
   syncBJID,
+  initializeProfile,
 } from '../../modules/profile';
 import SettingForm from '../../components/setting/SettingForm';
-import { sync } from '../../../node_modules/fast-glob/index';
+
 const SettingContainer = ({ history }) => {
   const dispatch = useDispatch();
-  const [error, setError] = useState(null);
   const { user, profile } = useSelector(({ user, profile }) => ({
     user: user.user,
     profile: profile,
@@ -42,11 +42,17 @@ const SettingContainer = ({ history }) => {
   };
 
   useEffect(() => {
-    console.log('1');
-    let username = JSON.parse(user).username;
-    dispatch(getPROFILE({ username }));
-    //Do Init Form
-  }, [dispatch]);
+    if (!user) {
+      alert('로그인이 필요합니다  ');
+      history.push('/');
+    } else {
+      let username = user.username;
+      dispatch(getPROFILE({ username }));
+      return () => {
+        dispatch(initializeProfile());
+      };
+    }
+  }, [dispatch, user, history]);
 
   return (
     <SettingForm

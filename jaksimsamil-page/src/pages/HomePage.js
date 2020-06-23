@@ -1,12 +1,12 @@
 import React from 'react';
 import HeaderContainer from '../containers/common/HeaderContainer';
-import Button from '../components/common/Button';
+import HomeContainer from '../containers/home/HomeContainer';
 
 const HomePage = () => {
   return (
     <div>
       <HeaderContainer />
-      <Button>home</Button>
+      <HomeContainer />
     </div>
   );
 };

@@ -22,6 +22,7 @@
     "mongoose": "^5.9.17",
     "morgan": "^1.10.0",
     "path": "^0.12.7",
+    "slack-node": "^0.1.8",
     "voca": "^1.4.0"
   },
   "devDependencies": {

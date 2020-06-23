@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import Button from '../common/Button';
 import palette from '../../lib/styles/palette';
 import BJIDForm from './BJIDForm';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 
 const SettingFormBlock = styled.div`
   h3 {
@@ -33,30 +36,40 @@ const SectionContainer = styled.div`
   display: flex;
 `;
 
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    background: palette.gray[2],
+  },
+  paper: {
+    margin: 'auto',
+    textAlign: 'center',
+    padding: 30,
+  },
+}));
+
 const SettingForm = ({ onChange, onBJIDSubmit, profile, onSyncBJIDSubmit }) => {
+  const classes = useStyles();
   return (
-    <SettingFormBlock>
-      <SectionContainer>
-        <h3>{profile.username}</h3>
-        <p>입력</p>
-      </SectionContainer>
-
-      <SectionContainer>
-        <BJIDForm
-          profile={profile}
-          onChange={onChange}
-          onBJIDSubmit={onBJIDSubmit}
-          onSyncBJIDSubmit={onSyncBJIDSubmit}
-        />
-      </SectionContainer>
-
-      <SectionContainer>
-        <h3>친구</h3>
-        <StyledInput name="BJID" placeholder="친구 아이디" />
-        <Button>추가</Button>
-      </SectionContainer>
-      <h3>친구 리스트</h3>
-    </SettingFormBlock>
+    <div className={classes.root}>
+      <Grid container spacing={3}>
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+            <h3>{profile.username}</h3>
+          </Paper>
+        </Grid>
+        <Grid container item xs={12}>
+          <Paper className={classes.paper} elevation={3}>
+            <BJIDForm
+              profile={profile}
+              onChange={onChange}
+              onBJIDSubmit={onBJIDSubmit}
+              onSyncBJIDSubmit={onSyncBJIDSubmit}
+            />
+          </Paper>
+        </Grid>
+      </Grid>
+    </div>
   );
 };
 
