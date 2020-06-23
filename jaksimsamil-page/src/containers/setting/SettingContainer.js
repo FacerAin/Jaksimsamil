@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import {
@@ -7,6 +7,7 @@ import {
   getPROFILE,
   syncBJID,
   initializeProfile,
+  setSLACK,
 } from '../../modules/profile';
 import SettingForm from '../../components/setting/SettingForm';
 
@@ -31,6 +32,12 @@ const SettingContainer = ({ history }) => {
     e.preventDefault();
     let username = profile.username;
     dispatch(syncBJID({ username }));
+  };
+  const onSlackURLSubmit = (e) => {
+    e.preventDefault();
+    let username = profile.username;
+    let slackWebHookURL = profile.slackWebHookURL;
+    dispatch(setSLACK({ username, slackWebHookURL }));
   };
 
   const onBJIDSubmit = (e) => {
@@ -60,6 +67,7 @@ const SettingContainer = ({ history }) => {
       onChange={onChange}
       onBJIDSubmit={onBJIDSubmit}
       onSyncBJIDSubmit={onSyncBJIDSubmit}
+      onSlackURLSubmit={onSlackURLSubmit}
       profile={profile}
     ></SettingForm>
   );
