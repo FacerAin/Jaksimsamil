@@ -5,5 +5,15 @@
 4. 추천 문제
 */
 exports.analyzeBJ = function (solvedBJ) {
-  console.log(solvedBJ);
+  console.log(typeof solvedBJ);
+  if (solvedBJ) {
+    solvedBJ.sort(function (a, b) {
+      return a.solvedDate > b.solvedDate
+        ? -1
+        : a.solvedDate < b.solvedDate
+        ? 1
+        : 0;
+    });
+    console.log(solvedBJ);
+  }
 };

@@ -4,15 +4,6 @@ import styled from 'styled-components';
 import palette from '../../lib/styles/palette';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-const BJIDFormBlock = styled.div`
-  width: 100%;
-  padding-top: 2rem;
-  h4 {
-    color: ${palette.gray[8]};
-    margin-top: 0;
-    margin-bottom: 0.5rem;
-  }
-`;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,7 +23,6 @@ const BJIDForm = ({ onChange, onBJIDSubmit, profile, onSyncBJIDSubmit }) => {
           onChange={onChange}
           value={profile.userBJID}
           placeholder="백준 아이디"
-          id="standard-basic"
           label="백준 아이디"
         />
         <Button variant="outlined" type="submit">
