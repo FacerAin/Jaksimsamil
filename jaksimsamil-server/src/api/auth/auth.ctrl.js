@@ -1,5 +1,6 @@
 const Joi = require("joi");
 const User = require("../../models/user");
+const Profile = require("../../models/profile");
 /*
 POST /api/auth/register
 {
@@ -27,15 +28,19 @@ exports.register = async (ctx) => {
       ctx.status = 409;
       return;
     }
+    const profile = new Profile({
+      username,
+    });
     const user = new User({
       username,
     });
     await user.setPassword(password);
+    await profile.save();
     await user.save();
     ctx.body = user.serialize();
 
     const token = user.generateToken();
-    ctx.cookies.set("acces_token", token, {
+    ctx.cookies.set("access_token", token, {
       //3일동안 유효
       maxAge: 1000 * 60 * 60 * 24 * 3,
       httpOnly: true,
@@ -70,7 +75,7 @@ exports.login = async (ctx) => {
     }
     ctx.body = user.serialize();
     const token = user.generateToken();
-    ctx.cookies.set("acces_token", token, {
+    ctx.cookies.set("access_token", token, {
       //7일동안 유효
       maxAge: 1000 * 60 * 60 * 24 * 7,
       httpOnly: true,

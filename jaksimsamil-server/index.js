@@ -2,6 +2,8 @@ const Koa = require("koa");
 const Router = require("koa-router");
 const bodyParser = require("koa-bodyparser");
 const mongoose = require("mongoose");
+const fs = require("fs");
+const morgan = require("koa-morgan");
 const jwtMiddleware = require("./src/lib/jwtMiddleware");
 const api = require("./src/api");
 
@@ -9,10 +11,13 @@ require("dotenv").config();
 
 const app = new Koa();
 const router = new Router();
-
+const accessLogStream = fs.createWriteStream(__dirname + "/access.log", {
+  flags: "a",
+});
+require("dotenv").config();
 app.use(bodyParser());
 app.use(jwtMiddleware);
-
+app.use(morgan("combined", { stream: accessLogStream }));
 const { SERVER_PORT, MONGO_URL } = process.env;
 
 router.use("/api", api.routes());
