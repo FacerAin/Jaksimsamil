@@ -6,6 +6,7 @@ const ProfileSchema = new Schema({
   username: { type: String, required: true, unique: true },
   userBJID: String,
   solvedBJ: Object,
+  solvedBJ_date: Object,
   friendList: [String],
   slackWebHookURL: String,
 });
@@ -14,6 +15,9 @@ ProfileSchema.statics.findByUsername = function (username) {
 };
 ProfileSchema.methods.getBJID = function () {
   return this.userBJID;
+};
+ProfileSchema.methods.getBJdata = function () {
+  return this.solvedBJ;
 };
 
 ProfileSchema.methods.serialize = function () {

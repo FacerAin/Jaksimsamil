@@ -1,4 +1,4 @@
-export const problem_set = [
+exports.problem_set = [
   "1517",
   "2448",
   "1891",
