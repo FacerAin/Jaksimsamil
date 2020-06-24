@@ -109,7 +109,6 @@ exports.syncBJ = async function (ctx) {
     ctx.throw(500, e);
   }
 };
-s;
 
 /*
 POST /api/proflie/recommend
