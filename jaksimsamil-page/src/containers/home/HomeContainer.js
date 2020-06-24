@@ -10,9 +10,7 @@ const HomeContainer = ({ history }) => {
     user: user.user,
     profile: profile,
   }));
-  useEffect(() => {
-    analyzeBJ(profile.solvedBJ);
-  }, [profile.solvedBJ]);
+  useEffect(() => {}, [profile.solvedBJ]);
   useEffect(() => {
     if (user) {
       let username = user.username;
