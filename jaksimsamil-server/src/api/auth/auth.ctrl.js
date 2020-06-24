@@ -40,7 +40,7 @@ exports.register = async (ctx) => {
     ctx.body = user.serialize();
 
     const token = user.generateToken();
-    ctx.cookies.set("acces_token", token, {
+    ctx.cookies.set("access_token", token, {
       //3일동안 유효
       maxAge: 1000 * 60 * 60 * 24 * 3,
       httpOnly: true,
@@ -75,7 +75,7 @@ exports.login = async (ctx) => {
     }
     ctx.body = user.serialize();
     const token = user.generateToken();
-    ctx.cookies.set("acces_token", token, {
+    ctx.cookies.set("access_token", token, {
       //7일동안 유효
       maxAge: 1000 * 60 * 60 * 24 * 7,
       httpOnly: true,

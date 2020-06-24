@@ -5,6 +5,10 @@ const mongoose = require("mongoose");
 const fs = require("fs");
 const morgan = require("koa-morgan");
 const jwtMiddleware = require("./src/lib/jwtMiddleware");
+const api = require("./src/api");
+
+require("dotenv").config();
+
 const app = new Koa();
 const router = new Router();
 const accessLogStream = fs.createWriteStream(__dirname + "/access.log", {
@@ -14,7 +18,6 @@ require("dotenv").config();
 app.use(bodyParser());
 app.use(jwtMiddleware);
 app.use(morgan("combined", { stream: accessLogStream }));
-const api = require("./src/api");
 const { SERVER_PORT, MONGO_URL } = process.env;
 
 router.use("/api", api.routes());
@@ -32,6 +35,7 @@ mongoose
   .catch((e) => {
     console.log(e);
   });
+
 app.listen(SERVER_PORT, () => {
   console.log("Server is running on port", process.env.SERVER_PORT);
 });
