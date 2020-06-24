@@ -12,6 +12,11 @@ const [SET_BJID, SET_BJID_SUCCESS, SET_BJID_FAILURE] = createRequestActionTypes(
   'profile/SET_BJID',
 );
 const [
+  SET_SLACK,
+  SET_SLACK_SUCCESS,
+  SET_SLACK_FAILURE,
+] = createRequestActionTypes('/profile/SET_SLACK');
+const [
   GET_PROFILE,
   GET_PROFILE_SUCCESS,
   GET_PROFILE_FAILURE,
@@ -26,6 +31,13 @@ export const initializeProfile = createAction(INITIALIZE);
 export const syncBJID = createAction(SYNC_BJID, ({ username }) => ({
   username,
 }));
+export const setSLACK = createAction(
+  SET_SLACK,
+  ({ username, slackWebHookURL }) => ({
+    username,
+    slackWebHookURL,
+  }),
+);
 export const setBJID = createAction(SET_BJID, ({ username, userBJID }) => ({
   username,
   userBJID,
@@ -45,14 +57,17 @@ const initialState = {
   solvedBJ: '',
   friendList: [],
   profileError: '',
+  slackWebHookURL: '',
 };
 const getPROFILESaga = createRequestSaga(GET_PROFILE, profileAPI.getPROFILE);
 const setBJIDSaga = createRequestSaga(SET_BJID, profileAPI.setBJID);
+const setSLACKSaga = createRequestSaga(SET_SLACK, profileAPI.setPROFILE);
 const syncBJIDSaga = createRequestSaga(SYNC_BJID, profileAPI.syncBJ);
 export function* profileSaga() {
   yield takeLatest(SET_BJID, setBJIDSaga);
   yield takeLatest(GET_PROFILE, getPROFILESaga);
   yield takeLatest(SYNC_BJID, syncBJIDSaga);
+  yield takeLatest(SET_SLACK, setSLACKSaga);
 }
 
 export default handleActions(
@@ -64,7 +79,9 @@ export default handleActions(
       }),
     [GET_PROFILE_SUCCESS]: (
       state,
-      { payload: { username, userBJID, solvedBJ, friendList } },
+      {
+        payload: { username, userBJID, solvedBJ, friendList, slackWebHookURL },
+      },
     ) => ({
       ...state,
       username: username,
@@ -72,6 +89,7 @@ export default handleActions(
       solvedBJ: solvedBJ,
       friendList: friendList,
       profileError: null,
+      slackWebHookURL: slackWebHookURL,
     }),
     [GET_PROFILE_FAILURE]: (state, { payload: error }) => ({
       ...state,
@@ -84,6 +102,15 @@ export default handleActions(
       profileError: null,
     }),
     [SET_BJID_FAILURE]: (state, { payload: error }) => ({
+      ...state,
+      profileError: error,
+    }),
+    [SET_SLACK_SUCCESS]: (state, { payload: { slackWebHookURL } }) => ({
+      ...state,
+      slackWebHookURL: slackWebHookURL,
+      profileError: null,
+    }),
+    [SET_SLACK_FAILURE]: (state, { payload: error }) => ({
       ...state,
       profileError: error,
     }),

@@ -1,5 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
@@ -11,26 +12,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BJIDForm = ({ onChange, onBJIDSubmit, profile, onSyncBJIDSubmit }) => {
+const SlackForm = ({ onChange, profile, onSlackURLSubmit }) => {
   const classes = useStyles();
   return (
     <div>
-      <form onSubmit={onBJIDSubmit}>
+      <form onSubmit={onSlackURLSubmit}>
         <TextField
-          name="userBJID"
+          name="slackWebHookURL"
           onChange={onChange}
-          value={profile.userBJID}
-          placeholder="백준 아이디"
-          label="백준 아이디"
+          value={profile.slackWebHookURL}
+          placeholder="슬랙 Webhook URL"
+          label="슬랙 Webhook URL"
         />
         <Button variant="outlined" type="submit">
           등록
         </Button>
       </form>
-      <Button variant="outlined" onClick={onSyncBJIDSubmit}>
-        동기화
-      </Button>
     </div>
   );
 };
-export default BJIDForm;
+
+export default SlackForm;

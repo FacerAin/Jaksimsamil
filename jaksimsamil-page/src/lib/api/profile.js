@@ -5,7 +5,8 @@ export const setBJID = ({ username, userBJID }) =>
     username: username,
     userBJID: userBJID,
   });
-
+export const setPROFILE = (postdata) =>
+  client.post('api/profile/setprofile', postdata);
 export const getPROFILE = ({ username }) =>
   client.post('api/profile/getprofile', { username });
 
