@@ -8,7 +8,7 @@ const test = async (userid) => {
     return_lst.push(lst[i].problem_number);
   }
 
-  var stringJson = JSON.stringify(return_lst) + "\n";
+  var stringJson = JSON.stringify(lst) + "\n";
   fs.open("test.json", "a", "666", function (err, id) {
     if (err) {
       console.log("file open err!!");

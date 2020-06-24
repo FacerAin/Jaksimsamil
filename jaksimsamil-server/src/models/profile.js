@@ -20,6 +20,17 @@ ProfileSchema.methods.getBJID = function () {
 ProfileSchema.methods.getBJdata = function () {
   return this.solvedBJ;
 };
+ProfileSchema.methods.getslackURL = function () {
+  return this.slackWebHookURL;
+};
+ProfileSchema.methods.getgoalNum = function () {
+  return this.goalNum;
+};
+ProfileSchema.methods.getTodaySovled = function () {
+  if (this.solvedBJ_date) {
+    return this.solvedBJ_date.presentNum;
+  }
+};
 
 ProfileSchema.methods.serialize = function () {
   const data = this.toJSON();
