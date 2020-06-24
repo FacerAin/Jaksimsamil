@@ -9,6 +9,7 @@ const ProfileSchema = new Schema({
   solvedBJ_date: Object,
   friendList: [String],
   slackWebHookURL: String,
+  goalNum: Number,
 });
 ProfileSchema.statics.findByUsername = function (username) {
   return this.findOne({ username });
