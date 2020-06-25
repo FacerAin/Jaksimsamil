@@ -9,13 +9,16 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
     },
   },
+  button: {
+    margin: theme.spacing(1),
+  },
 }));
 
 const BJIDForm = ({ onChange, onBJIDSubmit, profile, onSyncBJIDSubmit }) => {
   const classes = useStyles();
   return (
     <div>
-      <form onSubmit={onBJIDSubmit}>
+      <form>
         <TextField
           name="userBJID"
           onChange={onChange}
@@ -23,11 +26,21 @@ const BJIDForm = ({ onChange, onBJIDSubmit, profile, onSyncBJIDSubmit }) => {
           placeholder="백준 아이디"
           label="백준 아이디"
         />
-        <Button variant="outlined" type="submit">
-          등록
-        </Button>
       </form>
-      <Button variant="outlined" onClick={onSyncBJIDSubmit}>
+      <Button
+        className={classes.button}
+        variant="outlined"
+        onClick={onBJIDSubmit}
+        color="primary"
+      >
+        등록
+      </Button>
+      <Button
+        className={classes.button}
+        variant="outlined"
+        onClick={onSyncBJIDSubmit}
+        color="secondary"
+      >
         동기화
       </Button>
     </div>

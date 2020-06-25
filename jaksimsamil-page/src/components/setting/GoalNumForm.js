@@ -10,13 +10,16 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
     },
   },
+  button: {
+    margin: theme.spacing(1),
+  },
 }));
 
 const GoalNumForm = ({ onChange, profile, onGoalNumSubmit }) => {
   const classes = useStyles();
   return (
     <div>
-      <form onSubmit={onGoalNumSubmit}>
+      <form>
         <TextField
           name="goalNum"
           type="number"
@@ -28,10 +31,15 @@ const GoalNumForm = ({ onChange, profile, onGoalNumSubmit }) => {
             shrink: true,
           }}
         />
-        <Button variant="outlined" type="submit">
-          등록
-        </Button>
       </form>
+      <Button
+        className={classes.button}
+        onClick={onGoalNumSubmit}
+        color="primary"
+        variant="outlined"
+      >
+        등록
+      </Button>
     </div>
   );
 };

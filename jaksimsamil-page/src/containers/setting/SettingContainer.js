@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { withRouter } from 'react-router-dom';
 import {
   changeField,
@@ -14,6 +15,7 @@ import SettingForm from '../../components/setting/SettingForm';
 
 const SettingContainer = ({ history }) => {
   const [isLoading, setLoading] = useState(false);
+
   const dispatch = useDispatch();
   const { user, profile, loading } = useSelector(
     ({ user, profile, loading }) => ({
@@ -63,7 +65,7 @@ const SettingContainer = ({ history }) => {
   useEffect(() => {
     if (!user) {
       alert('로그인이 필요합니다  ');
-      history.push('/');
+      history.push('/login');
     } else {
       let username = user.username;
       dispatch(getPROFILE({ username }));
@@ -81,16 +83,18 @@ const SettingContainer = ({ history }) => {
   }, [dispatch, loading]);
 
   return (
-    <SettingForm
-      type="setting"
-      onChange={onChange}
-      onBJIDSubmit={onBJIDSubmit}
-      onSyncBJIDSubmit={onSyncBJIDSubmit}
-      onSlackURLSubmit={onSlackURLSubmit}
-      onGoalNumSubmit={onGoalNumSubmit}
-      profile={profile}
-      isLoading={isLoading}
-    ></SettingForm>
+    <div>
+      <SettingForm
+        type="setting"
+        onChange={onChange}
+        onBJIDSubmit={onBJIDSubmit}
+        onSyncBJIDSubmit={onSyncBJIDSubmit}
+        onSlackURLSubmit={onSlackURLSubmit}
+        onGoalNumSubmit={onGoalNumSubmit}
+        profile={profile}
+        isLoading={isLoading}
+      ></SettingForm>
+    </div>
   );
 };
 
