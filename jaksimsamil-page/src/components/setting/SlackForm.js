@@ -30,7 +30,7 @@ const SlackForm = ({ onChange, profile, onSlackURLSubmit }) => {
       </form>
       <Button
         className={classes.button}
-        onSubmit={onSlackURLSubmit}
+        onClick={onSlackURLSubmit}
         variant="outlined"
         type="submit"
         color="primary"
