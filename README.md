@@ -1,5 +1,10 @@
 # Jaksimsamil
 
+[!issue badge](https://img.shields.io/github/issues/FacerAin/OSS-Jaksimsamil)
+[!fork badge](https://img.shields.io/github/forks/FacerAin/OSS-Jaksimsamil)
+[!star badge](https://img.shields.io/github/stars/FacerAin/OSS-Jaksimsamil)
+[!license badge](https://img.shields.io/github/license/FacerAin/OSS-Jaksimsamil)
+
 ## Project Overview
 
 > **Jaksaimsamil PS Helper service**
@@ -19,6 +24,13 @@
 - 나의 학습 현황 한눈에 보기
 - 추천 문제 제공
 - Slack 알리미
+
+## Usages
+
+1. Using Slack Notify
+   <br>
+
+- Go []
 
 ## Getting Started
 
