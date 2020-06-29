@@ -33,7 +33,7 @@
     "nodemon": "^2.0.4"
   },
   "scripts": {
-    "start": "node src",
+    "start": "node ./index.js",
     "start:dev": "nodemon --watch src/ src/index.js"
   }
 }
