@@ -1,9 +1,9 @@
 # Jaksimsamil
 
-[!issue badge](https://img.shields.io/github/issues/FacerAin/OSS-Jaksimsamil)
-[!fork badge](https://img.shields.io/github/forks/FacerAin/OSS-Jaksimsamil)
-[!star badge](https://img.shields.io/github/stars/FacerAin/OSS-Jaksimsamil)
-[!license badge](https://img.shields.io/github/license/FacerAin/OSS-Jaksimsamil)
+![issue badge](https://img.shields.io/github/issues/FacerAin/OSS-Jaksimsamil)
+![fork badge](https://img.shields.io/github/forks/FacerAin/OSS-Jaksimsamil)
+![star badge](https://img.shields.io/github/stars/FacerAin/OSS-Jaksimsamil)
+![license badge](https://img.shields.io/github/license/FacerAin/OSS-Jaksimsamil)
 
 ## Project Overview
 
