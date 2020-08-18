@@ -3,7 +3,7 @@ const api = new Router();
 
 const auth = require("./auth");
 const friend = require("./friend");
-const notify = require("./profile");
+const notify = require("./notify");
 const user = require("./user");
 const profile = require("./profile");
 

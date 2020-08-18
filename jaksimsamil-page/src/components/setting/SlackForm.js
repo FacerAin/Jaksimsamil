@@ -10,13 +10,16 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
     },
   },
+  button: {
+    margin: theme.spacing(1),
+  },
 }));
 
 const SlackForm = ({ onChange, profile, onSlackURLSubmit }) => {
   const classes = useStyles();
   return (
     <div>
-      <form onSubmit={onSlackURLSubmit}>
+      <form>
         <TextField
           name="slackWebHookURL"
           onChange={onChange}
@@ -24,10 +27,16 @@ const SlackForm = ({ onChange, profile, onSlackURLSubmit }) => {
           placeholder="슬랙 Webhook URL"
           label="슬랙 Webhook URL"
         />
-        <Button variant="outlined" type="submit">
-          등록
-        </Button>
       </form>
+      <Button
+        className={classes.button}
+        onClick={onSlackURLSubmit}
+        variant="outlined"
+        type="submit"
+        color="primary"
+      >
+        등록
+      </Button>
     </div>
   );
 };

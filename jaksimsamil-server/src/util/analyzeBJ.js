@@ -1,22 +1,14 @@
-/*
-2. 현재 날짜와의 차이 => 
-3. 오늘 푼 문제 => 앞에서부터 순회하면서 데이트 같은거 찾기
-3. 최근 일주일간 푼 문제 수 => 앞에서부터 순회하면서 - 값이 
-4. 추천 문제 => 정규 셋에서 없는거 찾기
-5. 날짜별로 묶기.
-데이터베이스에서 처리하자
-*/
-
-let moment = require('moment');
-
+let moment = require("moment");
+const problem_set = require("../data/problem_set");
+const compareBJ = require("./compareBJ");
 exports.analyzeBJ = function (solvedBJ) {
   try {
     if (solvedBJ) {
-      console.log(solvedBJ[0]);
       let presentDate = moment();
-      let presentDate_str = presentDate.format('YYYYMMDD');
-      let latestDate = moment(solvedBJ[0].solved_date, 'YYYYMMDD');
-      let difflatest = presentDate.diff(latestDate, 'days');
+      let presentDate_str = presentDate.format("YYYYMMDD");
+      let latestDate = moment(solvedBJ[0].solved_date, "YYYYMMDD");
+      let difflatest = presentDate.diff(latestDate, "days");
+      let latestSolve = solvedBJ[0];
 
       let solvedBJbyDATE = {};
       for (let i = 0; i < solvedBJ.length; i++) {
@@ -33,14 +25,46 @@ exports.analyzeBJ = function (solvedBJ) {
         presentDate_str in solvedBJbyDATE
           ? solvedBJbyDATE[presentDate_str].length
           : 0;
+
+      let weekNUM = 0;
+      let monthNUM = 0;
+      let totalNUM = 0;
+      for (let i = 0; i < solvedBJ.length; i++) {
+        let diffDate = presentDate.diff(
+          moment(solvedBJ[i].solved_date, "YYYYMMDD"),
+          "days"
+        );
+        if (diffDate <= 7) {
+          weekNUM++;
+          monthNUM++;
+          totalNUM++;
+        } else if (diffDate <= 31) {
+          monthNUM++;
+          totalNUM++;
+        } else {
+          totalNUM++;
+        }
+      }
+
+      let unsolved_data = compareBJ.compareBJ(
+        solvedBJ,
+        problem_set.problem_set
+      );
+      let recommend_data = compareBJ.randomItem(unsolved_data);
+
       let returnOBJ = {
-        latestDate: latestDate.format('YYYYMMDD'),
+        latestDate: latestDate.format("YYYYMMDD"),
         difflatest: difflatest,
         latestNum: latestNum,
         presentNum: presentNum,
+        weekNum: weekNUM,
+        monthNum: monthNUM,
+        totalNum: totalNUM,
         solvedBJbyDATE: solvedBJbyDATE,
+        latestSolve: latestSolve,
+        recommend_data: recommend_data,
       };
-      console.log(returnOBJ);
+
       return returnOBJ;
     }
   } catch (e) {

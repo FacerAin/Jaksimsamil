@@ -17,6 +17,11 @@ const [
   SET_SLACK_FAILURE,
 ] = createRequestActionTypes('/profile/SET_SLACK');
 const [
+  SET_GOALNUM,
+  SET_GOALNUM_SUCCESS,
+  SET_GOALNUM_FAILURE,
+] = createRequestActionTypes('/profile/SET_GOALNUM');
+const [
   GET_PROFILE,
   GET_PROFILE_SUCCESS,
   GET_PROFILE_FAILURE,
@@ -31,11 +36,20 @@ export const initializeProfile = createAction(INITIALIZE);
 export const syncBJID = createAction(SYNC_BJID, ({ username }) => ({
   username,
 }));
+
 export const setSLACK = createAction(
   SET_SLACK,
   ({ username, slackWebHookURL }) => ({
     username,
     slackWebHookURL,
+  }),
+);
+
+export const setGOALNUM = createAction(
+  SET_GOALNUM,
+  ({ username, goalNum }) => ({
+    username,
+    goalNum,
   }),
 );
 export const setBJID = createAction(SET_BJID, ({ username, userBJID }) => ({
@@ -58,16 +72,21 @@ const initialState = {
   friendList: [],
   profileError: '',
   slackWebHookURL: '',
+  solvedBJ_date: '',
+  goalNum: '',
 };
 const getPROFILESaga = createRequestSaga(GET_PROFILE, profileAPI.getPROFILE);
 const setBJIDSaga = createRequestSaga(SET_BJID, profileAPI.setBJID);
 const setSLACKSaga = createRequestSaga(SET_SLACK, profileAPI.setPROFILE);
+const setGOALNUMSaga = createRequestSaga(SET_GOALNUM, profileAPI.setPROFILE);
 const syncBJIDSaga = createRequestSaga(SYNC_BJID, profileAPI.syncBJ);
+
 export function* profileSaga() {
   yield takeLatest(SET_BJID, setBJIDSaga);
   yield takeLatest(GET_PROFILE, getPROFILESaga);
   yield takeLatest(SYNC_BJID, syncBJIDSaga);
   yield takeLatest(SET_SLACK, setSLACKSaga);
+  yield takeLatest(SET_GOALNUM, setGOALNUMSaga);
 }
 
 export default handleActions(
@@ -80,7 +99,15 @@ export default handleActions(
     [GET_PROFILE_SUCCESS]: (
       state,
       {
-        payload: { username, userBJID, solvedBJ, friendList, slackWebHookURL },
+        payload: {
+          username,
+          userBJID,
+          solvedBJ,
+          friendList,
+          slackWebHookURL,
+          solvedBJ_date,
+          goalNum,
+        },
       },
     ) => ({
       ...state,
@@ -90,6 +117,8 @@ export default handleActions(
       friendList: friendList,
       profileError: null,
       slackWebHookURL: slackWebHookURL,
+      solvedBJ_date: solvedBJ_date,
+      goalNum: goalNum,
     }),
     [GET_PROFILE_FAILURE]: (state, { payload: error }) => ({
       ...state,
@@ -111,6 +140,14 @@ export default handleActions(
       profileError: null,
     }),
     [SET_SLACK_FAILURE]: (state, { payload: error }) => ({
+      ...state,
+      profileError: error,
+    }),
+    [SET_GOALNUM_SUCCESS]: (state, { payload: { goalNum } }) => ({
+      ...state,
+      goalNum: goalNum,
+    }),
+    [SET_GOALNUM_FAILURE]: (state, { payload: error }) => ({
       ...state,
       profileError: error,
     }),
