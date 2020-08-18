@@ -139,7 +139,6 @@ if __name__=="__main__":
     client=setup()
     problems=get_khu_problem_list()
     problems=get_problem_info(problems)
-    problems=pd.read_csv('problems.csv',index_col=0)
     problems=get_solvedac_level(problems)
     problems=get_category(problems)
     update_database(problems,client)
