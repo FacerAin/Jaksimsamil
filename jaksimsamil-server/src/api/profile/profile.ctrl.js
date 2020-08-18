@@ -50,7 +50,6 @@ exports.setProfile = async (ctx) => {
       //freindList: Joi.array().items(Joi.string()),
     })
     .unknown();
-  console.log(ctx.request.body);
   const result = Joi.validate(ctx.request.body, schema);
   if (result.error) {
     ctx.status = 400;
