@@ -14,7 +14,6 @@ exports.compareBJ = function (solvedBJ_new, problem_set) {
         new_obj.push(problem_set[i]);
       }
     }
-    console.log(new_obj);
     return new_obj;
   } catch (e) {
     console.log(e);
