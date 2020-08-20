@@ -97,7 +97,7 @@ def get_solvedac_level(problems):
             if problem['id'] == problemNum:
                 problems.loc[problems.problemNum == problemNum,
                              'solvedacLevel'] = problem['level']
-                print(problem['level'])
+                print("solvedacLevel: ", problem['level'])
                 break
         if idx % SAVE_EVERY == 0:
             save(problems, SAVE_PATH)
@@ -136,12 +136,12 @@ def get_category(problems):
             problemList.extend(problemResult['result']['problems'])
         idx = 0
         problemListLen = len(problemList)
-        print(problemList)
         for problemNum in problems['problemNum'].values:
             if idx < problemListLen and problemList[idx]['id'] == problemNum:
                 category = json.loads(
                     problems.loc[problems.problemNum == problemNum, 'category'].values[0])
                 category.append(tag['full_name_ko'])
+                print("category: ", category)
                 problems.loc[problems.problemNum == problemNum, 'category'] = json.dumps(
                     category, ensure_ascii=False)
                 idx += 1
