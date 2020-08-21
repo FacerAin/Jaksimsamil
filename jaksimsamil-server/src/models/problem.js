@@ -8,6 +8,7 @@ const ProblemSchema=new Schema({
     solvedacLevel: {type: Number},
     sumbitNum: {type: Number, required: true},
     correctNum: {type: Number, required: true},
+    count: { type: Number },
     category: {type:[String]}
 });
 
@@ -44,6 +45,10 @@ ProblemSchema.methods.getSumbitNum=function(){
 
 ProblemSchema.methods.getCorrectNum=function(){
     return this.correctNum;
+}
+
+ProblemSchema.methods.getCount=function(){
+    return this.count;
 }
 
 ProblemSchema.methods.getCategory=function(){
