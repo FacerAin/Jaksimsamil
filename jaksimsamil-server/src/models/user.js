@@ -10,9 +10,11 @@ const UserSchema = new Schema({
   userBJID: String,
   sovledBJ: Object,
   solvedBJ_date: Object,
-  friendList: [String],
+  friendList: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   slackWebHookURL: String,
   goalNum: Number,
+},{
+  collection: 'user'
 });
 
 UserSchema.statics.findByUsername = function (username) {

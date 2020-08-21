@@ -10,6 +10,8 @@ const ProblemSchema=new Schema({
     correctNum: {type: Number, required: true},
     count: { type: Number },
     category: {type:[String]}
+},{
+    collection: 'problem'
 });
 
 ProblemSchema.statics.findByProblemNum=function(problemNum){
@@ -59,5 +61,5 @@ ProblemSchema.methods.serialize=function(){
     return this.toJSON();
 }
 
-const Problem=mongoose.model('Problem',ProblemSchema);
-module.exports=Problem;
+const Problem = mongoose.model('Problem',ProblemSchema);
+module.exports = Problem;
