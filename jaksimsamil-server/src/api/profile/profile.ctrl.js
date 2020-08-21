@@ -133,7 +133,7 @@ exports.recommend = async (ctx) => {
       problem_set.problem_set
     );
     ctx.body = compareBJ.randomItem(unsolved_data);
-    //데이터가 비었을 떄 예외처리 필요
+    //TODO: 데이터가 비었을 떄 예외처리 필요
   } catch (e) {
     ctx.throw(500, e);
   }
