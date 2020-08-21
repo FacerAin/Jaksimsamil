@@ -26,6 +26,10 @@ def save(df,path='problems.csv'):
     df.to_csv(path)
     print('Done.')
 
+def load(path='problems.csv'):
+    problems=pd.read_csv(path,index_col=0)
+    return problems
+
 def get_khu_problem_list():
     pageNum=1
     idx=0
@@ -78,7 +82,7 @@ def get_solvedac_level(problems):
         print('Collecting solved.ac level data...:',problemNum)
         result=json.loads(res.text)
         for problem in result['result']['problems']:
-            if problem['id']==problemNum:
+            if int(problem['id'])==int(problemNum):
                 problems.loc[problems.problemNum==problemNum,'solvedacLevel']=problem['level']
                 break
         if idx%SAVE_EVERY==0:
@@ -114,7 +118,7 @@ def get_category(problems):
         idx=0
         problemListLen=len(problemList)
         for problemNum in problems['problemNum'].values:
-            if idx<problemListLen and problemList[idx]['id']==problemNum:
+            if idx<problemListLen and int(problemList[idx]['id'])==int(problemNum):
                 category=json.loads(problems.loc[problems.problemNum==problemNum,'category'].values[0])
                 category.append(tag['full_name_ko'])
                 problems.loc[problems.problemNum==problemNum,'category']=json.dumps(category,ensure_ascii=False)
