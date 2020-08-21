@@ -9,6 +9,8 @@ const ChallengeSchema=new Schema({
     durationPerSession: {type: String, required: true}, // '1d' means one day per session, '2w' means 2 weeks per session, '3m' means 3 months per session.
     goalPerSession: {type: Number, required:true}, // number of problems for one session
     isOpen: { type: Boolean }
+},{
+    collection: 'challenge'
 });
 
 ChallengeSchema.statics.findByChallengeName=function(challengeName){
