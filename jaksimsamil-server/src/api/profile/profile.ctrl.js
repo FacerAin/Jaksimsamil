@@ -1,4 +1,4 @@
-const Profile = require("../../models/profile");
+const User = require("../../models/user");
 const mongoose = require("mongoose");
 const getBJ = require("../../util/getBJ");
 const Joi = require("joi");
@@ -16,6 +16,7 @@ exports.checkObjectId = (ctx, next) => {
   }
   return next();
 };
+
 /*POST /api/profile/getprofile
 {
   username: "username"
@@ -24,7 +25,7 @@ exports.checkObjectId = (ctx, next) => {
 exports.getProfile = async (ctx) => {
   try {
     const { username } = ctx.request.body;
-    const profile = await Profile.findByUsername(username);
+    const profile = await User.findByUsername(username);
     if (!profile) {
       ctx.status = 401;
       return;
@@ -58,7 +59,7 @@ exports.setProfile = async (ctx) => {
   }
 
   try {
-    const profile = await Profile.findOneAndUpdate(
+    const profile = await User.findOneAndUpdate(
       { username: ctx.request.body.username },
       ctx.request.body,
       {
@@ -90,7 +91,7 @@ exports.syncBJ = async function (ctx) {
   }
 
   try {
-    const profile = await Profile.findByUsername(username);
+    const profile = await User.findByUsername(username);
     if (!profile) {
       ctx.status = 401;
       return;
@@ -98,7 +99,7 @@ exports.syncBJ = async function (ctx) {
     const BJID = await profile.getBJID();
     let BJdata = await getBJ.getBJ(BJID);
     let BJdata_date = await analyzeBJ.analyzeBJ(BJdata);
-    const updateprofile = await Profile.findOneAndUpdate(
+    const updateprofile = await User.findOneAndUpdate(
       { username: username },
       { solvedBJ: BJdata, solvedBJ_date: BJdata_date },
       { new: true }
@@ -123,7 +124,7 @@ exports.recommend = async (ctx) => {
     return;
   }
   try {
-    const profile = await Profile.findByUsername(username);
+    const profile = await User.findByUsername(username);
     if (!profile) {
       ctx.status = 401;
       return;
