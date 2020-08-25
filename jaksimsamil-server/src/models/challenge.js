@@ -8,7 +8,7 @@ const ChallengeSchema=new Schema({
     endDate: {type: Object, required: true},
     durationPerSession: {type: String, required: true}, // '1d' means one day per session, '2w' means 2 weeks per session, '3m' means 3 months per session.
     goalPerSession: {type: Number, required:true}, // number of problems for one session
-    isOpen: { type: Boolean }
+    status: { type: String }
 },{
     collection: 'challenge'
 });
@@ -35,6 +35,10 @@ ChallengeSchema.method.getDurationPerSession=function(){
 
 ChallengeSchema.methods.getGoalPerSession=function(){
     return this.goalPerSession;
+}
+
+ChallengeSchema.methods.getStatus=function(){
+    return this.status;
 }
 
 ChallengeSchema.methods.serialize=function(){

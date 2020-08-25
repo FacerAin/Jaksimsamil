@@ -6,7 +6,7 @@ const SessionSchema = new Schema({
     challengeId: { type: Schema.Types.ObjectId, ref: 'Challenge' },
     sessionStartDate: { type: Object },
     sessionEndDate: { type: Object },
-    isOpen: { type: Boolean  }
+    status: { type: String  }
 },{
     collection: 'session'
 });
@@ -23,8 +23,8 @@ SessionSchema.methods.getSessionEndDate=function(){
     return this.sessionEndDate;
 }
 
-SessionSchema.methods.getIsOpen=function(){
-    return this.isOpen;
+SessionSchema.methods.getStatus=function(){
+    return this.status;
 }
 
 SessionSchema.methods.serialize=function(){
