@@ -9,7 +9,7 @@ const ProblemSchema=new Schema({
     sumbitNum: {type: Number, required: true},
     correctNum: {type: Number, required: true},
     count: { type: Number },
-    category: {type:[String]}
+    category: [{ type:String }],
 },{
     collection: 'problem'
 });

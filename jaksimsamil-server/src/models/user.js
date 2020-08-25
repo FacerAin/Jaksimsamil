@@ -21,6 +21,11 @@ UserSchema.statics.findByUsername = function (username) {
   return this.findOne({ username });
 };
 
+UserSchema.methods.addFriend=function(friend){
+  this.friendList.push(friend._id);
+  return this.save();
+}
+
 UserSchema.methods.setPassword = async function (password) {
   const hash = await bcrypt.hash(password, 10);
   this.hashedPassword = hash;
