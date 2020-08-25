@@ -25,7 +25,6 @@ exports.getChallenge = async (ctx) => {
     endDate: Date Object,
     durationPerSession: "2w", // '1d' means one day per session, '2w' means 2 weeks per session, '3m' means 3 months per session.
     goalPerSession: 3,
-    groups: [{'name1', 'name2'}]
 }
 */
 exports.addChallenge = async (ctx) => {
@@ -35,8 +34,7 @@ exports.addChallenge = async (ctx) => {
       startDate: Joi.date(),
       endDate: Joi.date(),
       durationPerSession: Joi.string(),
-      goalPerSession: Joi.number(),
-      groups: Joi.array().items(Joi.string()),
+      goalPerSession: Joi.number()
     })
     .unknown();
   const result = Joi.validate(ctx.request.body, schema);
