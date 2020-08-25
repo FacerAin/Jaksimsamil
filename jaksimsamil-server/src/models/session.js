@@ -11,5 +11,25 @@ const SessionSchema = new Schema({
     collection: 'session'
 });
 
+SessionSchema.statics.findByChallengeId=function(challenge){
+    return this.find({challengeId:challenge._id.$oid});
+}
+
+SessionSchema.methods.getSessionStartDate=function(){
+    return this.sessionStartDate;
+}
+
+SessionSchema.methods.getSessionEndDate=function(){
+    return this.sessionEndDate;
+}
+
+SessionSchema.methods.getIsOpen=function(){
+    return this.isOpen;
+}
+
+SessionSchema.methods.serialize=function(){
+    return this.toJSON();
+}
+
 const Session = mongoose.model('Session', SessionSchema);
 module.exports = Session;
