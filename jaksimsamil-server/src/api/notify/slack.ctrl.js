@@ -1,4 +1,4 @@
-const Profile = require("../../models/profile");
+const User = require("../../models/user");
 const sendSlack = require("../../util/sendSlack");
 const problem_set = require("../../data/problem_set");
 const compareBJ = require("../../util/compareBJ");
@@ -12,7 +12,7 @@ exports.slackGoal = async (ctx) => {
   try {
     const { username } = ctx.request.body;
 
-    const profile = await Profile.findByUsername(username);
+    const profile = await User.findByUsername(username);
     if (!profile) {
       ctx.status = 401;
       return;
@@ -62,7 +62,7 @@ exports.slackRecommend = async (ctx) => {
     console.log("1");
     const { username } = ctx.request.body;
 
-    const profile = await Profile.findByUsername(username);
+    const profile = await User.findByUsername(username);
     if (!profile) {
       ctx.status = 401;
       return;
