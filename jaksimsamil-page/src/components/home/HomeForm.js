@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import palette from '../../lib/styles/palette';
-import AuthForm from '../auth/AuthForm';
+import HeatMap from './HeatMap';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
   },
 }));
-const HomeForm = ({ PSdata, goalNum }) => {
+const HomeForm = ({ PSdata, HMArr, goalNum }) => {
   const classes = useStyles();
   return PSdata ? (
     <div className={classes.root}>
@@ -48,7 +48,11 @@ const HomeForm = ({ PSdata, goalNum }) => {
             <h3>마지막으로 푼 문제</h3>
           </Paper>
         </Grid>
-
+        <Grid item xs={12}>
+          <Paper className={classes.paper}>
+            <HeatMap HMArr={HMArr} />
+          </Paper>
+        </Grid>
         <Grid item xs={4}>
           <Paper className={classes.paper}>
             <h1>{PSdata.weekNum}</h1>
