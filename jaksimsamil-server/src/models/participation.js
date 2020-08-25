@@ -18,11 +18,11 @@ const ParticipationSchema = new Schema({
 });
 
 ParticipationSchema.statics.findBySessionId=function(session){
-    return this.find({sessionId:session._id.$oid});
+    return this.find({sessionId:session._id});
 }
 
 ParticipationSchema.statics.findByGroupId=function(group){
-    return this.find({groupId:group._id.$oid});
+    return this.find({groupId:group._id});
 }
 
 ParticipationSchema.methods.addProblem=function(problem){

@@ -12,7 +12,7 @@ const SessionSchema = new Schema({
 });
 
 SessionSchema.statics.findByChallengeId=function(challenge){
-    return this.find({challengeId:challenge._id.$oid});
+    return this.find({challengeId:challenge._id});
 }
 
 SessionSchema.methods.getSessionStartDate=function(){

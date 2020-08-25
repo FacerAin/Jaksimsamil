@@ -22,7 +22,7 @@ UserSchema.statics.findByUsername = function (username) {
 };
 
 UserSchema.methods.addFriend=function(friend){
-  this.friendList.push({$oid:friend._id.$oid});
+  this.friendList.push(friend._id);
   return this.save();
 }
 

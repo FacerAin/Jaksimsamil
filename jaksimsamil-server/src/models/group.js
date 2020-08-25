@@ -9,8 +9,16 @@ const GroupSchema = new Schema({
 });
 
 GroupSchema.methods.addGroupMemeber=function(user){
-    this.members.push({$oid:user._id.$oid});
+    this.members.push(user._id);
     return this.save();
+}
+
+GroupSchema.methods.getMembers=function(){
+    return this.members;
+}
+
+GroupSchema.methods.serialize=function(){
+    return this.toJSON();
 }
 
 const Group = mongoose.model('Group',GroupSchema);
