@@ -49,7 +49,7 @@ exports.addChallenge = async (ctx) => {
     ctx.body = result.error;
     return;
   }
-  const {
+  let {
     challengeName,
     startDate,
     endDate,
@@ -77,14 +77,24 @@ exports.addChallenge = async (ctx) => {
     const newChallenge=await Challenge.findByChallengeName(challengeName);
     const newChallenge_id=newChallenge._id;
     const timeStep=Number(durationPerSession.slice(0,-1))
-    for(let s_date=startDate,e_date=s_date;s_date<endDate;){
+    if(typeof(startDate)=='string'){
+      startDate=new Date(startDate);
+    }
+    if(typeof(endDate)=='string'){
+      endDate=new Date(endDate);
+    }
+    for(let s_date=new Date(startDate);s_date<endDate;){
+      let e_date=new Date(s_date);
       if(durationPerSession[durationPerSession.length-1]==='d'){
+        console.log('day');
         e_date.setDate(s_date.getDate()+timeStep);
       }
       else if(durationPerSession[durationPerSession.length-1]==='w'){
+        console.log('week');
         e_date.setDate(s_date.getDate()+timeStep*7);
       }
       else if(durationPerSession[durationPerSession.length-1]==='m'){
+        console.log('month');
         e_date.setMonth(s_date.getMonth()+timeStep);
       }
       e_date.setMinutes(e_date.getMinutes()-1);
@@ -101,6 +111,7 @@ exports.addChallenge = async (ctx) => {
       else{
         status="end";
       }
+      console.log(`start:${s_date}\nend:${e_date}`);
       const session=new Session({
         challengeId:newChallenge_id,
         sessionStartDate:s_date,
@@ -108,10 +119,10 @@ exports.addChallenge = async (ctx) => {
         status:status,
       });
       await session.save();
-      s_date=e_date;
+      s_date=new Date(e_date);
       s_date.setMinutes(s_date.getMinutes()+1);
     }
-    ctx.body = challenge();
+    ctx.body = challenge;
   } catch (e) {
     ctx.throw(500, e);
   }
@@ -123,7 +134,7 @@ query string status can be in ['all','enrolled','progress','end']
 */
 exports.list = async (ctx) => {
   try{
-    const status = ctx.qs.status;
+    const status = ctx.query.status;
     if (status!=='all'){
       const challenges = await Challenge.find({status:status}).select('-_id');
       ctx.body = challenges;
@@ -151,7 +162,8 @@ exports.participate=async (ctx)=>{
   TODO: access token validation,
   recommend:get username from access_token
   */
-    const {username,challengeName}=ctx.body;
+    console.log(ctx.request.body);
+    const {username,challengeName}=ctx.request.body;
     const challenge=await Challenge.findByChallengeName(challengeName);
     const challenge_id=challenge._id;
     const user=await User.findByUsername(username);
@@ -159,9 +171,25 @@ exports.participate=async (ctx)=>{
     const newGroup=new Group({
       members:[user_id],
     });
-    newGroup.save();
+    let newGroup_id=""
+    await newGroup.save(async (err,product)=>{
+      if(err){
+        throw err;
+      }
+      newGroup_id=product._id;
+      const sessions=await Session.findByChallengeId(challenge_id);
+      sessions.forEach(async (elem) => {
+        const newParticipation=new Participation({
+          sessionId:elem._id,
+          groupId:newGroup_id,
+          problems:[],
+        });
+        await newParticipation.save();
+      });
+    });
   }
   catch(e){
+    console.error(e);
     ctx.throw(500,e);
   }
 };
