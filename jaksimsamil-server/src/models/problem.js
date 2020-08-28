@@ -8,7 +8,10 @@ const ProblemSchema=new Schema({
     solvedacLevel: {type: Number},
     sumbitNum: {type: Number, required: true},
     correctNum: {type: Number, required: true},
-    category: {type:[String]}
+    count: { type: Number },
+    category: [{ type:String }],
+},{
+    collection: 'problem'
 });
 
 ProblemSchema.statics.findByProblemNum=function(problemNum){
@@ -46,6 +49,10 @@ ProblemSchema.methods.getCorrectNum=function(){
     return this.correctNum;
 }
 
+ProblemSchema.methods.getCount=function(){
+    return this.count;
+}
+
 ProblemSchema.methods.getCategory=function(){
     return this.category;
 }
@@ -54,5 +61,5 @@ ProblemSchema.methods.serialize=function(){
     return this.toJSON();
 }
 
-const Problem=mongoose.model('Problem',ProblemSchema);
-module.exports=Problem;
+const Problem = mongoose.model('Problem',ProblemSchema);
+module.exports = Problem;
