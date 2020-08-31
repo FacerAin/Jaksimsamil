@@ -28,7 +28,9 @@ SessionSchema.methods.getStatus=function(){
 }
 
 SessionSchema.methods.serialize=function(){
-    return this.toJSON();
+    let sessionJSON=this.toJSON();
+    delete sessionJSON._id;
+    return sessionJSON;
 }
 
 const Session = mongoose.model('Session', SessionSchema);
