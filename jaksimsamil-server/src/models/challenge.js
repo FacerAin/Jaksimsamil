@@ -44,7 +44,7 @@ ChallengeSchema.methods.getStatus=function(){
 
 ChallengeSchema.methods.serialize=function(){
     let challengeJSON = this.toJSON();
-    delete challenge._id;
+    delete challengeJSON._id;
     return challengeJSON;
 }
 
