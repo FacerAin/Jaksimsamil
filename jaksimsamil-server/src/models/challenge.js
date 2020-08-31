@@ -42,7 +42,9 @@ ChallengeSchema.methods.getStatus=function(){
 }
 
 ChallengeSchema.methods.serialize=function(){
-    return this.toJSON();
+    let challengeJSON = this.toJSON();
+    delete challengeJSON._id;
+    return challengeJSON;
 }
 
 const Challenge = mongoose.model('Challenge', ChallengeSchema);

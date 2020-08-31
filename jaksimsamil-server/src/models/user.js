@@ -38,13 +38,14 @@ UserSchema.methods.checkPassword = async function (password) {
 UserSchema.methods.serialize = function () {
   const data = this.toJSON();
   delete data.hashedPassword;
+  delete data._id;
   return data;
 };
 
 UserSchema.methods.generateToken = function () {
   const token = jwt.sign(
     {
-      _id: this.id,
+      _id: this._id,
       username: this.username,
     },
     process.env.JWT_SECRET,
