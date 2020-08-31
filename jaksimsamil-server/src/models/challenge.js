@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const challenge = require("../api/challenge");
 
 const { Schema } = mongoose;
 
