@@ -1,6 +1,5 @@
 const Joi = require("joi");
 const User = require("../../models/user");
-const Profile = require("../../models/profile");
 /*
 POST /api/auth/register
 {
@@ -28,14 +27,10 @@ exports.register = async (ctx) => {
       ctx.status = 409;
       return;
     }
-    const profile = new Profile({
-      username,
-    });
     const user = new User({
       username,
     });
     await user.setPassword(password);
-    await profile.save();
     await user.save();
     ctx.body = user.serialize();
 
