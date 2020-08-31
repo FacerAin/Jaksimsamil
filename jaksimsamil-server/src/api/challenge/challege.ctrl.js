@@ -13,12 +13,12 @@ const Joi = require("joi");
 exports.getChallenge = async (ctx) => {
   try {
     const { challengeName } = ctx.request.body;
-    const challenge = await Challenge.findByChallengeName(challengeName).select('-_id');
+    const challenge = await Challenge.findByChallengeName(challengeName);
     if (!challenge) {
       ctx.status = 401;
       return;
     }
-    ctx.body = challenge;
+    ctx.body = challenge.serialize();
   } catch (e) {
     ctx.throw(500, e);
   }
@@ -58,7 +58,7 @@ exports.addChallenge = async (ctx) => {
   } = ctx.request.body;
 
   try {
-    const isChallengeExist = await Challenge.findByChallengeName(challengeName).select('-_id');
+    const isChallengeExist = await Challenge.findByChallengeName(challengeName);
 
     if (isChallengeExist) {
       ctx.status = 409;
@@ -122,7 +122,7 @@ exports.addChallenge = async (ctx) => {
       s_date=new Date(e_date);
       s_date.setMinutes(s_date.getMinutes()+1);
     }
-    ctx.body = challenge;
+    ctx.body = challenge.serialize();
   } catch (e) {
     ctx.throw(500, e);
   }
@@ -136,12 +136,12 @@ exports.list = async (ctx) => {
   try{
     const status = ctx.params.status;
     if (status!=='all'){
-      const challenges = await Challenge.find({status:status}).select('-_id');
-      ctx.body = challenges;
+      const challenges = await Challenge.find({status:status});
+      ctx.body = challenges.serialize();
     }
     else {
-      const challenges = await Challenge.find({}).select('-_id');
-      ctx.body = challenges;
+      const challenges = await Challenge.find({});
+      ctx.body = challenges.serialize();
     }
   }
   catch(e){
@@ -169,6 +169,7 @@ exports.participate=async (ctx)=>{
     const user=await User.findByUsername(username);
     const user_id=user._id;
     const newGroup=new Group({
+      groupName:`${user.username}의 ${challengeName} 그룹`,
       members:[user_id],
     });
     let newGroup_id=""
@@ -185,6 +186,7 @@ exports.participate=async (ctx)=>{
           problems:[],
         });
         await newParticipation.save();
+        ctx.body=newParticipation.serialize();
       });
     });
   }
