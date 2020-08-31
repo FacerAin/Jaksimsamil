@@ -58,7 +58,9 @@ ProblemSchema.methods.getCategory=function(){
 }
 
 ProblemSchema.methods.serialize=function(){
-    return this.toJSON();
+    let problemJSON=this.toJSON();
+    delete problemJSON._id;
+    return problemJSON;
 }
 
 const Problem = mongoose.model('Problem',ProblemSchema);

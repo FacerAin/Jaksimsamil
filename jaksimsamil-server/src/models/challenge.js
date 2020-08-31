@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const challenge = require("../api/challenge");
 
 const { Schema } = mongoose;
 
@@ -42,7 +43,9 @@ ChallengeSchema.methods.getStatus=function(){
 }
 
 ChallengeSchema.methods.serialize=function(){
-    return this.toJSON();
+    let challengeJSON = this.toJSON();
+    delete challenge._id;
+    return challengeJSON;
 }
 
 const Challenge = mongoose.model('Challenge', ChallengeSchema);

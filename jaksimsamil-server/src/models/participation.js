@@ -29,5 +29,11 @@ ParticipationSchema.methods.addProblem=function(problem){
     this.problems.push({problemNum:problem.problemNum,isSolved:problem.isSolved});
 }
 
+ParticipationSchema.methods.serialize=function(){
+    let participationJSON=this.toJSON();
+    delete participationJSON._id;
+    return participationJSON;
+}
+
 const Participation = mongoose.model('Participation', ParticipationSchema);
 module.exports = Participation;
