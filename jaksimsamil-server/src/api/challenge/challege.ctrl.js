@@ -129,12 +129,12 @@ exports.addChallenge = async (ctx) => {
 };
 
 
-/* GET /api/challenge/list?status
-query string status can be in ['all','enrolled','progress','end']
+/* GET /api/challenge/list/:status
+parameter status can be in ['all','enrolled','progress','end']
 */
 exports.list = async (ctx) => {
   try{
-    const status = ctx.query.status;
+    const status = ctx.params.status;
     if (status!=='all'){
       const challenges = await Challenge.find({status:status}).select('-_id');
       ctx.body = challenges;

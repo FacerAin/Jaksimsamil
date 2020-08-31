@@ -20,9 +20,9 @@
     "goalPerSession":Number
 }
 ```
-1. GET /api/challenge/list?status  
+1. GET /api/challenge/list/:status  
 - 챌린지 목록 조회
-- input(query)
+- input(parameter)
 ```
 status=(one of ["all","enrolled","progress","end"])
 ```
