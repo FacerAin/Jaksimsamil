@@ -24,7 +24,6 @@ GroupSchema.methods.getMembers=function(){
 
 GroupSchema.methods.serialize=function(){
     let groupJSON=this.toJSON();
-    delete groupJSON._id;
     return groupJSON;
 }
 
