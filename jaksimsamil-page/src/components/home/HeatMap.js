@@ -1,6 +1,7 @@
 import React, { use } from 'react';
 import CalendarHeatmap from 'react-calendar-heatmap';
 import 'react-calendar-heatmap/dist/styles.css';
+import ReactTooltip from 'react-tooltip';
 /*
 TODO: 날짜 범위 지정, 날짜별 검색 추가
 */
@@ -28,12 +29,19 @@ const HeatMap = (HMArr) => {
           return `color-github-${value.count}`;
         }}
         tooltipDataAttrs={(value) => {
-          return {
-            'data-tooltip': `${value.date} has count: ${value.count}`,
-          };
+          if (!value.date) {
+            return {
+              'data-tip': '',
+            };
+          } else {
+            return {
+              'data-tip': `${value.date}: ${value.count} 문제`,
+            };
+          }
         }}
         showWeekdayLabels={true}
       />
+      <ReactTooltip />
     </div>
   );
 };
