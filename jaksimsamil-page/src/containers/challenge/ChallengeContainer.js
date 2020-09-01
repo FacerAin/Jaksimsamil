@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import ChallengeForm from '../../components/challenge/ChallengeForm';
 
 const ChallengeContainer = () => {
-  return <div></div>;
+  return <ChallengeForm />;
 };
 
 export default ChallengeContainer;
