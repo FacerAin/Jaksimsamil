@@ -31,7 +31,6 @@ ParticipationSchema.methods.addProblem=function(problem){
 
 ParticipationSchema.methods.serialize=function(){
     let participationJSON=this.toJSON();
-    delete participationJSON._id;
     return participationJSON;
 }
 

@@ -59,7 +59,6 @@ ProblemSchema.methods.getCategory=function(){
 
 ProblemSchema.methods.serialize=function(){
     let problemJSON=this.toJSON();
-    delete problemJSON._id;
     return problemJSON;
 }
 

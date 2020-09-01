@@ -29,7 +29,6 @@ SessionSchema.methods.getStatus=function(){
 
 SessionSchema.methods.serialize=function(){
     let sessionJSON=this.toJSON();
-    delete sessionJSON._id;
     return sessionJSON;
 }
 
