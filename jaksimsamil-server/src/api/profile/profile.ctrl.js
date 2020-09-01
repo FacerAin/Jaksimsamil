@@ -30,7 +30,7 @@ exports.getProfile = async (ctx) => {
       ctx.status = 401;
       return;
     }
-    ctx.body = profile;
+    ctx.body = profile.serialize();
   } catch (e) {
     ctx.throw(500, e);
   }
@@ -71,7 +71,7 @@ exports.setProfile = async (ctx) => {
       ctx.status = 404;
       return;
     }
-    ctx.body = profile;
+    ctx.body = profile.serialize();
   } catch (e) {
     ctx.throw(500, e);
   }
@@ -104,7 +104,7 @@ exports.syncBJ = async function (ctx) {
       { solvedBJ: BJdata, solvedBJ_date: BJdata_date },
       { new: true }
     ).exec();
-    ctx.body = updateprofile;
+    ctx.body = updateprofile.serialize();
   } catch (e) {
     ctx.throw(500, e);
   }
