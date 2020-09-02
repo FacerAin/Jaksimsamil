@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -9,6 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import palette from '../../lib/styles/palette';
 import Typography from '@material-ui/core/Typography';
+import ChallengeInfoCard from './ChallengeInfoCard';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,7 +25,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ChallengeForm = () => {
+const ChallengeForm = ({ options, setViewcategory, setPartcategory }) => {
+  const testlist = [1, 2, 3, 4, 5, 6, 7];
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -38,8 +40,14 @@ const ChallengeForm = () => {
               <Paper className={classes.paper}>
                 챌린지 참여하기
                 <Autocomplete
+                  onChange={(e, newValue) => {
+                    setPartcategory(newValue);
+                  }}
+                  autoHighlight
                   style={{ width: 300 }}
-                  options={['전체', '준비', '진행 중', '마감']}
+                  options={options}
+                  getOptionLabel={(option) => option.label}
+                  renderOption={(option) => <Fragment>{option.label}</Fragment>}
                   renderInput={(params) => (
                     <TextField
                       {...params}
@@ -60,8 +68,14 @@ const ChallengeForm = () => {
           <Paper className={classes.paper}>
             참여중인 챌린지
             <Autocomplete
+              autoHighlight
               style={{ width: 300 }}
-              options={['전체', '준비', '진행 중', '마감']}
+              options={options}
+              onChange={(e, newValue) => {
+                setViewcategory(newValue);
+              }}
+              getOptionLabel={(option) => option.label}
+              renderOption={(option) => <Fragment>{option.label}</Fragment>}
               renderInput={(params) => (
                 <TextField
                   {...params}
@@ -75,20 +89,9 @@ const ChallengeForm = () => {
               )}
             />
             <Grid container spacing={5}>
-              <Grid item xs={4}>
-                <Paper className={classes.paper}>
-                  챌린지 이름, 기간, 참여 인원수
-                </Paper>
-              </Grid>
-              <Grid item xs={4}>
-                <Paper className={classes.paper}>뒤 배경 변경 필요</Paper>
-              </Grid>
-              <Grid item xs={4}>
-                <Paper className={classes.paper}>test3</Paper>
-              </Grid>
-              <Grid item xs={4}>
-                <Paper className={classes.paper}>test4</Paper>
-              </Grid>
+              {testlist.map((name) => (
+                <ChallengeInfoCard />
+              ))}
             </Grid>
           </Paper>
         </Grid>
