@@ -50,6 +50,7 @@ const HomeForm = ({ PSdata, HMArr, goalNum }) => {
         </Grid>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
+            <h1>알고리즘 기록</h1>
             <HeatMap HMArr={HMArr} />
           </Paper>
         </Grid>
