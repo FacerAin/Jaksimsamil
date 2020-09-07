@@ -132,10 +132,10 @@ exports.list = async (ctx) => {
     const status = ctx.params.status;
     if (status !== "all") {
       const challenges = await Challenge.find({ status: status });
-      ctx.body = challenges.serialize();
+      ctx.body = challenges;
     } else {
       const challenges = await Challenge.find({});
-      ctx.body = challenges.serialize();
+      ctx.body = challenges;
     }
   } catch (e) {
     ctx.throw(500, e);
