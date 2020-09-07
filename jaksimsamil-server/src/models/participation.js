@@ -27,6 +27,7 @@ ParticipationSchema.statics.findByGroupId=function(group){
 
 ParticipationSchema.methods.addProblem=function(problem){
     this.problems.push({problemNum:problem.problemNum,isSolved:problem.isSolved});
+    return this.save();
 }
 
 ParticipationSchema.methods.serialize=function(){
