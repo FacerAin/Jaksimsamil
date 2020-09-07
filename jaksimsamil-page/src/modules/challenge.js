@@ -14,21 +14,31 @@ const [
 ] = createRequestActionTypes('challenge/GET_CHALLENGE');
 
 export const initializeChallenge = createAction(INITIALIZE);
-export const getChallenge = createAction(GET_CHALLENGE, ({ status }) => ({
-  status,
-}));
+export const getChallenge = createAction(GET_CHALLENGE, (status) => status);
 
-const initilState = {};
+const initilState = {
+  challengeList: [],
+  challengeError: '',
+};
 
-const getChallenge = createRequestSaga(GET_CHALLENGE, profileAPI.challengeAPI);
+const getChallengeSaga = createRequestSaga(GET_CHALLENGE, challengeAPI.list);
 
-export default handleActions({
-  [INITIALIZE]: () => {
-    initilState;
-  },
-  [GET_CHALLENGE_SUCCESS]:
-    (state,
-    {
-      payload: {},
+export function* challengeSaga() {
+  yield takeLatest(GET_CHALLENGE, getChallengeSaga);
+}
+
+export default handleActions(
+  {
+    [INITIALIZE]: () => initilState,
+    [GET_CHALLENGE_SUCCESS]: (state, { payload: challengeList }) => ({
+      ...state,
+      challengeList: challengeList,
+      challengeError: null,
     }),
-});
+    [GET_CHALLENGE_FAILURE]: (state, { payload: error }) => ({
+      ...state,
+      challengeError: error,
+    }),
+  },
+  initilState,
+);

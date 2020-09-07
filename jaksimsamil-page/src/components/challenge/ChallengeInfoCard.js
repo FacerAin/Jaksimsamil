@@ -16,7 +16,10 @@ const ChallengeInfoCard = () => {
   const classes = useStyles();
   return (
     <Grid item xs={4}>
-      <Paper className={classes.paper}>TEST</Paper>
+      <Paper className={classes.paper}>
+        <h2>챌린지 이름</h2>
+        <h3>2020.03.01 - 2020.04.01</h3>
+      </Paper>
     </Grid>
   );
 };
