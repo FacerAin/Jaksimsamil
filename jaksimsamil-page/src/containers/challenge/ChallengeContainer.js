@@ -22,8 +22,10 @@ const ChallengeContainer = () => {
   }, [viewcategory, partcategory]);
   useEffect(() => {
     dispatch(getChallenge('all'));
-    console.log(challengeList);
   }, []);
+  useEffect(() => {
+    console.log(challengeList);
+  }, [challengeList]);
 
   return (
     <ChallengeForm
