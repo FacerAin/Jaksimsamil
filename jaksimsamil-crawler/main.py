@@ -23,11 +23,11 @@ def setup():
 
 def save(df,path='problems.csv'):
     print('Saving to {}...'.format(path),end='')
-    df.to_csv(path)
+    df.to_csv(path,encoding='utf-8-sig')
     print('Done.')
 
 def load(path='problems.csv'):
-    problems=pd.read_csv(path,index_col=0)
+    problems=pd.read_csv(path,index_col=0,encoding='utf-8-sig')
     return problems
 
 def get_khu_problem_list():
@@ -119,11 +119,15 @@ def get_category(problems):
         problemListLen=len(problemList)
         for problemNum in problems['problemNum'].values:
             if idx<problemListLen and int(problemList[idx]['id'])==int(problemNum):
-                category=json.loads(problems.loc[problems.problemNum==problemNum,'category'].values[0])
-                category.append(tag['full_name_ko'])
-                problems.loc[problems.problemNum==problemNum,'category']=json.dumps(category,ensure_ascii=False)
-                idx+=1
-                print('Problem {} in category {}'.format(problemNum,tag['full_name_ko']))
+                try:
+                    category=json.loads(problems.loc[problems.problemNum==problemNum,'category'].values[0])
+                    category.append(tag['full_name_ko'])
+                    problems.loc[problems.problemNum==problemNum,'category']=json.dumps(category,ensure_ascii=False)
+                    idx+=1
+                    print('Problem {} in category {}'.format(problemNum,tag['full_name_ko']))
+                except UnicodeEncodeError:
+                    print('Error occured in {}'.format(problemNum),file=sys.stderr)
+                    pass
         save(problems,SAVE_PATH)
     return problems            
 
