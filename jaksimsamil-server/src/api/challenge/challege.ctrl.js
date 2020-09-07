@@ -117,7 +117,9 @@ exports.addChallenge = async (ctx) => {
       await session.save();
       s_date = new Date(e_date);
       s_date.setMinutes(s_date.getMinutes() + 1);
+      await challenge.updateOne({ status: status });
     }
+
     ctx.body = challenge.serialize();
   } catch (e) {
     ctx.throw(500, e);
