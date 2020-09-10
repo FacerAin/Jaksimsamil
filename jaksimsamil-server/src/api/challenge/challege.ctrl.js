@@ -10,7 +10,7 @@ const Joi = require("joi");
     challengeName: "challengeName"
 }
 */
-exports.getChallenge = async (ctx) => {
+exports.getChallengePOST = async (ctx) => {
   try {
     const { challengeName } = ctx.request.body;
     const challenge = await Challenge.findByChallengeName(challengeName);
@@ -189,3 +189,36 @@ exports.participate = async (ctx) => {
     ctx.throw(500, e);
   }
 };
+
+/*
+GET /api/challenge/getchallenge?username
+*/
+exports.getChallengeGET = async (ctx)=>{
+  try{
+    const {username} = ctx.request.query;
+    const user = await User.findByUsername(username);
+    const user_id=user._id;
+    const groups = await Group.find();
+    const userIncludedGroups = [];
+    for(let i=0;i<groups.length;i++){
+      if(groups[i].members.includes(user_id)){
+        userIncludedGroups.push(groups[i]);
+      }
+    }
+    const challengeList = [];
+    for(let i=0;i<userIncludedGroups.length;i++){
+      const participations = await Participation.findByGroupId(userIncludedGroups[i]._id);
+      for(let j=0;j<participations.length;j++){
+        const session = await Session.findById(participations[j].sessionId);
+        const challenge = await Challenge.findById(session.challengeId);
+        if(!challengeList.includes(challenge)){
+          challengeList.push(challenge);
+        }
+      }
+    }
+    ctx.body = challengeList.map(c=>c.serialize());
+  }
+  catch(e){
+    ctx.throw(500,e);
+  }
+}
