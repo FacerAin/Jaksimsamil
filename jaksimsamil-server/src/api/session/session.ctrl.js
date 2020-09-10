@@ -6,6 +6,7 @@ const User = require("../../models/user");
 const Challenge = require("../../models/challenge");
 const Problem = require("../../models/problem");
 const mongoose = require("mongoose");
+require('dotenv').config();
 
 const {ObjectId} = mongoose.Types;
 
@@ -127,7 +128,25 @@ exports.status=async (ctx)=>{
         }
         const participation=await Participation.findOne({sessionId:sessionId,groupId:groupId});
         const group = await Group.findById(groupId);
-        
+        for(let i=0;i<group.members.length;i++){
+            const user=await User.findById(group.members[i]);
+            await axios.patch(`http://localhost:${process.env.SERVER_PORT}/api/profile/syncBJ`,{username:user.username});
+        }
+        for(let i=0;i<group.members.length;i++){
+            const user=await User.findById(group.members[i]);
+            let userProblemList = [];
+            for(let key in user.solvedBJ_date.solvedBJbyDATE){
+                userProblemList.push(user.solvedBJ_date.solvedBJbyDATE[key]);
+            }
+            userProblemList=userProblemList.flat().map(elem=>elem.problem_number);
+            for(let j=0;j<participation.problems.length;j++){
+                if(userProblemList.includes(String(participation.problems[i].problemNum))){
+                    participation.problems[i].isSolved=true;
+                    await participation.save();
+                }
+            }
+        }
+        ctx.body=participation.serialize();
     }
     catch(e){
         ctx.throw(500,e);
