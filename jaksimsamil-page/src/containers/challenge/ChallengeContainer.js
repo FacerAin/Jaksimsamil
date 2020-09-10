@@ -4,10 +4,10 @@ import { withRouter } from 'react-router-dom';
 import ChallengeForm from '../../components/challenge/ChallengeForm';
 import { getChallenge, initializeChallenge } from '../../modules/challenge';
 const options = [
-  { code: 0, label: '전체' },
-  { code: 1, label: '준비' },
-  { code: 2, label: '진행 중' },
-  { code: 3, label: '마감' },
+  { code: 0, label: '전체', query: 'all' },
+  { code: 1, label: '준비', query: 'enrolled' },
+  { code: 2, label: '진행 중', query: 'progress' },
+  { code: 3, label: '마감', query: 'end' },
 ];
 const ChallengeContainer = () => {
   const dispatch = useDispatch();
@@ -19,10 +19,8 @@ const ChallengeContainer = () => {
   useEffect(() => {
     console.log(viewcategory);
     console.log(partcategory);
+    dispatch(getChallenge(viewcategory.query));
   }, [viewcategory, partcategory]);
-  useEffect(() => {
-    dispatch(getChallenge('all'));
-  }, []);
   useEffect(() => {
     console.log(challengeList);
   }, [challengeList]);
@@ -32,6 +30,7 @@ const ChallengeContainer = () => {
       options={options}
       setViewcategory={setViewcategory}
       setPartcategory={setPartcategory}
+      challengeData={challengeList}
     />
   );
 };

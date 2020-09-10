@@ -25,7 +25,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ChallengeForm = ({ options, setViewcategory, setPartcategory }) => {
+const ChallengeForm = ({
+  options,
+  setViewcategory,
+  setPartcategory,
+  challengeData,
+}) => {
   const testlist = [1, 2, 3, 4, 5, 6, 7];
   const classes = useStyles();
   return (
@@ -41,7 +46,7 @@ const ChallengeForm = ({ options, setViewcategory, setPartcategory }) => {
                 챌린지 참여하기
                 <Autocomplete
                   onChange={(e, newValue) => {
-                    setPartcategory(newValue);
+                    setViewcategory(newValue);
                   }}
                   autoHighlight
                   style={{ width: 300 }}
@@ -60,6 +65,11 @@ const ChallengeForm = ({ options, setViewcategory, setPartcategory }) => {
                     />
                   )}
                 />
+                <Grid container spacing={5}>
+                  {challengeData.map((data) => (
+                    <ChallengeInfoCard ChallengeInfo={data} />
+                  ))}
+                </Grid>
               </Paper>
             </AccordionDetails>
           </Accordion>
@@ -72,7 +82,7 @@ const ChallengeForm = ({ options, setViewcategory, setPartcategory }) => {
               style={{ width: 300 }}
               options={options}
               onChange={(e, newValue) => {
-                setViewcategory(newValue);
+                setPartcategory(newValue);
               }}
               getOptionLabel={(option) => option.label}
               renderOption={(option) => <Fragment>{option.label}</Fragment>}
@@ -88,11 +98,7 @@ const ChallengeForm = ({ options, setViewcategory, setPartcategory }) => {
                 />
               )}
             />
-            <Grid container spacing={5}>
-              {testlist.map((name) => (
-                <ChallengeInfoCard />
-              ))}
-            </Grid>
+            <Grid container spacing={5}></Grid>
           </Paper>
         </Grid>
       </Grid>

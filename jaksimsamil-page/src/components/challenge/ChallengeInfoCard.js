@@ -12,13 +12,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ChallengeInfoCard = () => {
+const ChallengeInfoCard = ({ ChallengeInfo }) => {
   const classes = useStyles();
+  console.log(ChallengeInfo);
   return (
     <Grid item xs={4}>
       <Paper className={classes.paper}>
-        <h2>챌린지 이름</h2>
-        <h3>2020.03.01 - 2020.04.01</h3>
+        <h2>{ChallengeInfo.challengeName}</h2>
+        <h3>{ChallengeInfo.startDate + ' - ' + ChallengeInfo.endDate}</h3>
       </Paper>
     </Grid>
   );
