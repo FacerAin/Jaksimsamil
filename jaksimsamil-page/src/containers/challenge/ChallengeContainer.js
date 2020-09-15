@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import ChallengeForm from '../../components/challenge/ChallengeForm';
-import { getChallenge, initializeChallenge } from '../../modules/challenge';
+import {
+  getChallengelist,
+  getChallengeuser,
+  participateChallenge,
+  initializeChallenge,
+} from '../../modules/challenge';
 const options = [
   { code: 0, label: '전체', query: 'all' },
   { code: 1, label: '준비', query: 'enrolled' },
@@ -11,26 +16,38 @@ const options = [
 ];
 const ChallengeContainer = () => {
   const dispatch = useDispatch();
-  const { challengeList } = useSelector(({ challenge }) => ({
-    challengeList: challenge.challengeList,
-  }));
+  const { challengeList, challengeUser, username } = useSelector(
+    ({ challenge, user }) => ({
+      challengeList: challenge.challengeList,
+      challengeUser: challenge.challengeUser,
+      username: user.user.username,
+    }),
+  );
   const [viewcategory, setViewcategory] = useState(options[0]);
   const [partcategory, setPartcategory] = useState(options[0]);
+
+  const onParticipate = (challengeName) => {
+    dispatch(participateChallenge({ challengeName, username }));
+  };
+
   useEffect(() => {
-    console.log(viewcategory);
-    console.log(partcategory);
-    dispatch(getChallenge(viewcategory.query));
-  }, [viewcategory, partcategory]);
+    dispatch(getChallengelist(viewcategory.query));
+  }, [viewcategory]);
   useEffect(() => {
-    console.log(challengeList);
-  }, [challengeList]);
+    dispatch(getChallengeuser(username));
+  }, [partcategory]);
+  useEffect(() => {
+    console.log(challengeUser);
+  }, [challengeList, challengeUser]);
 
   return (
     <ChallengeForm
       options={options}
       setViewcategory={setViewcategory}
       setPartcategory={setPartcategory}
-      challengeData={challengeList}
+      challengeList={challengeList}
+      challengeUser={challengeUser}
+      onParticipate={onParticipate}
     />
   );
 };

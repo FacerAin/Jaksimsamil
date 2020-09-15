@@ -10,6 +10,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import palette from '../../lib/styles/palette';
 import Typography from '@material-ui/core/Typography';
 import ChallengeInfoCard from './ChallengeInfoCard';
+import ChallengePartCard from './ChallengePartCard';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(8),
-    margin: 'auto',
     textAlign: 'center',
     color: theme.palette.text.secondary,
   },
@@ -29,7 +29,9 @@ const ChallengeForm = ({
   options,
   setViewcategory,
   setPartcategory,
-  challengeData,
+  challengeList,
+  challengeUser,
+  onParticipate,
 }) => {
   const testlist = [1, 2, 3, 4, 5, 6, 7];
   const classes = useStyles();
@@ -37,42 +39,38 @@ const ChallengeForm = ({
     <div className={classes.root}>
       <Grid container spacing={5}>
         <Grid item xs={12}>
-          <Accordion>
-            <AccordionSummary>
-              <Typography>챌린지 참여하기</Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Paper className={classes.paper}>
-                챌린지 참여하기
-                <Autocomplete
-                  onChange={(e, newValue) => {
-                    setViewcategory(newValue);
+          <Paper className={classes.paper}>
+            챌린지 참여하기
+            <Autocomplete
+              onChange={(e, newValue) => {
+                setViewcategory(newValue);
+              }}
+              autoHighlight
+              style={{ width: 300 }}
+              options={options}
+              getOptionLabel={(option) => option.label}
+              renderOption={(option) => <Fragment>{option.label}</Fragment>}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="검색 기준"
+                  variant="outlined"
+                  inputProps={{
+                    ...params.inputProps,
+                    Autocomplete: 'new-password',
                   }}
-                  autoHighlight
-                  style={{ width: 300 }}
-                  options={options}
-                  getOptionLabel={(option) => option.label}
-                  renderOption={(option) => <Fragment>{option.label}</Fragment>}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="검색 기준"
-                      variant="outlined"
-                      inputProps={{
-                        ...params.inputProps,
-                        Autocomplete: 'new-password',
-                      }}
-                    />
-                  )}
                 />
-                <Grid container spacing={5}>
-                  {challengeData.map((data) => (
-                    <ChallengeInfoCard ChallengeInfo={data} />
-                  ))}
-                </Grid>
-              </Paper>
-            </AccordionDetails>
-          </Accordion>
+              )}
+            />
+            <Grid container spacing={5}>
+              {challengeList.map((data) => (
+                <ChallengePartCard
+                  ChallengeInfo={data}
+                  onParticipate={onParticipate}
+                />
+              ))}
+            </Grid>
+          </Paper>
         </Grid>
         <Grid item xs={12}>
           <Paper className={classes.paper}>
@@ -98,7 +96,11 @@ const ChallengeForm = ({
                 />
               )}
             />
-            <Grid container spacing={5}></Grid>
+            <Grid container spacing={5}>
+              {challengeUser.map((data) => (
+                <ChallengeInfoCard ChallengeInfo={data} />
+              ))}
+            </Grid>
           </Paper>
         </Grid>
       </Grid>

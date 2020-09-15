@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ChallengeInfoCard = ({ ChallengeInfo }) => {
+const ChallengeInfoCard = ({ ChallengeInfo, onParticipate }) => {
   const classes = useStyles();
   console.log(ChallengeInfo);
   return (
@@ -24,7 +24,12 @@ const ChallengeInfoCard = ({ ChallengeInfo }) => {
       <Paper className={classes.paper}>
         <h2>{ChallengeInfo.challengeName}</h2>
         <h3>{ChallengeInfo.startDate + ' - ' + ChallengeInfo.endDate}</h3>
-        <Button className={classes.button} variant="outlined" color="primary">
+        <Button
+          onClick={() => onParticipate(ChallengeInfo.challengeName)}
+          className={classes.button}
+          variant="outlined"
+          color="primary"
+        >
           참가
         </Button>
       </Paper>
