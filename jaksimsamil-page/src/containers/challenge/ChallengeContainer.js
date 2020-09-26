@@ -34,7 +34,9 @@ const ChallengeContainer = () => {
     dispatch(getChallengelist(viewcategory.query));
   }, [viewcategory]);
   useEffect(() => {
-    dispatch(getChallengeuser(username));
+    if (username) {
+      dispatch(getChallengeuser(username));
+    }
   }, [partcategory]);
   useEffect(() => {
     console.log(challengeUser);
